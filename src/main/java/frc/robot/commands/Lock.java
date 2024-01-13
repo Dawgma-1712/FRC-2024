@@ -20,12 +20,12 @@ public class Lock extends CommandBase{
 
     @Override
     public void execute(){
-
+        swerve.setLock(!swerve.getLockedState());
     }
 
     @Override
     public void end(boolean interrupted){
-        
+        swerve.stopModules();
     }
 
     @Override

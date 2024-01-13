@@ -131,6 +131,12 @@ public class Swerve extends SubsystemBase {
     this.locked = locked;
   }
 
+  public void stopModules(){
+    for(SwerveModule mod : mSwerveMods){
+        mod.stop();
+    }
+  }
+
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     for (SwerveModule mod : mSwerveMods) {
