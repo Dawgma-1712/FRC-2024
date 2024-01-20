@@ -10,12 +10,6 @@
           "data": {
             "pathName": "TestPath"
           }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lock"
-          }
         }
       ]
     }

@@ -19,6 +19,7 @@ import frc.lib.util.CANCoderUtil.CCUsage;
 import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
+import frc.robot.Debug;
 
 public class SwerveModule {
   public int moduleNumber;
@@ -66,12 +67,12 @@ public class SwerveModule {
     resetToAbsolute();
   }
 
-  public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
+  public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop, boolean locked) {
     // Custom optimize command, since default WPILib optimize assumes continuous controller which
     // REV and CTRE are not
     desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
 
-    setAngle(desiredState);
+    setAngle(desiredState, locked);
     setSpeed(desiredState, isOpenLoop);
   }
 
@@ -124,7 +125,7 @@ public class SwerveModule {
   private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
     if (isOpenLoop) {
       double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
-      driveMotor.set(percentOutput);
+      driveMotor.set(percentOutput * 0.7);
     } else {
       driveController.setReference(
           desiredState.speedMetersPerSecond,
@@ -134,13 +135,18 @@ public class SwerveModule {
     }
   }
 
-  private void setAngle(SwerveModuleState desiredState) {
+  private void setAngle(SwerveModuleState desiredState, Boolean locked) {
     // Prevent rotating module if speed is less then 1%. Prevents jittering.
-    Rotation2d angle =
+    Rotation2d angle = new Rotation2d();
+    if(!locked){
+    angle =
         (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01))
             ? lastAngle
             : desiredState.angle;
-
+    }
+    else{
+      angle = desiredState.angle;
+    }
     angleController.setReference(angle.getDegrees(), com.revrobotics.ControlType.kPosition);
     lastAngle = angle;
   }

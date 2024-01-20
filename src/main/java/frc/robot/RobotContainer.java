@@ -37,6 +37,7 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  private final JoystickButton lock = new JoystickButton(driver, 1);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -73,6 +74,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     //zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    lock.onTrue(new Lock(s_Swerve));
+
   }
 
   /**

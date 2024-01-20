@@ -20,6 +20,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import frc.robot.Constants;
+import frc.robot.Debug;
 
 public class Swerve extends SubsystemBase {
   //private final Pigeon2 gyro;
@@ -65,9 +66,9 @@ public class Swerve extends SubsystemBase {
       this::getSpeed,
       this::driveRobotRelative,
       new HolonomicPathFollowerConfig(
-        new PIDConstants(5.0, 0.0, 0.0),
-        new PIDConstants(5.0, 0.0, 0.0),
-        4.5,
+        new PIDConstants(0.5, 0.0, 0.0),
+        new PIDConstants(0.5, 0.0, 0.0),
+        1,
         0.4,
         new ReplanningConfig()
         ),
@@ -85,11 +86,12 @@ public class Swerve extends SubsystemBase {
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
     SwerveModuleState[] swerveModuleStates = new SwerveModuleState[4];
+    //Debug.log(5, "Drive locked" + Boolean.toString(locked));
     if(locked){
-        swerveModuleStates[0] = new SwerveModuleState(0, new Rotation2d(-Math.PI/4.0));
-        swerveModuleStates[1] = new SwerveModuleState(0, new Rotation2d(Math.PI/4.0));
-        swerveModuleStates[2] = new SwerveModuleState(0, new Rotation2d(Math.PI/4.0));    
-        swerveModuleStates[3] = new SwerveModuleState(0, new Rotation2d(-Math.PI/4.0));
+        swerveModuleStates[0] = new SwerveModuleState(0, new Rotation2d(Math.PI/4.0));
+        swerveModuleStates[1] = new SwerveModuleState(0, new Rotation2d(-Math.PI/4.0));
+        swerveModuleStates[2] = new SwerveModuleState(0, new Rotation2d(-Math.PI/4.0));    
+        swerveModuleStates[3] = new SwerveModuleState(0, new Rotation2d(Math.PI/4.0));
     }
     else{
         swerveModuleStates =
@@ -101,9 +103,8 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
     }
     for (SwerveModule mod : mSwerveMods) {
-        mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop, locked);
     }
-
   }
 
   /* Used by SwerveControllerCommand in Auto */
@@ -111,7 +112,7 @@ public class Swerve extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
-      mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+      mod.setDesiredState(desiredStates[mod.moduleNumber], false, locked);
     }
   }
 
@@ -173,6 +174,7 @@ public class Swerve extends SubsystemBase {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
+    SmartDashboard.putBoolean("Lock?", locked);
   }
 
   //Path Planner - AutoBuilder
@@ -186,4 +188,6 @@ public class Swerve extends SubsystemBase {
     SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
     setModuleStates(targetStates);
   }
+
+
 }
