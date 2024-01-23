@@ -175,6 +175,8 @@ public class Swerve extends SubsystemBase {
           "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
     SmartDashboard.putBoolean("Lock?", locked);
+    SmartDashboard.putNumber("DistanceX", swerveOdometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("DistanceY", swerveOdometry.getPoseMeters().getY());
   }
 
   //Path Planner - AutoBuilder
