@@ -128,7 +128,7 @@ public class SwerveModule {
       driveMotor.set(percentOutput);
     } else {
       driveController.setReference(
-          desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed,
+          desiredState.speedMetersPerSecond / (Constants.Swerve.maxSpeed),
           com.revrobotics.ControlType.kVelocity,
           0,
           feedforward.calculate(desiredState.speedMetersPerSecond));

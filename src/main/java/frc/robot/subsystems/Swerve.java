@@ -35,11 +35,14 @@ public class Swerve extends SubsystemBase {
 
   private boolean locked;
 
+  private double percentSpeed;
+
   public Swerve() {
     //gyro = new Pigeon2(Constants.Swerve.pigeonID);
     //gyro.configFactoryDefault();
     zeroGyro();
 
+    percentSpeed = 1;
     locked = false;
     mSwerveMods =
         new SwerveModule[] {
@@ -66,7 +69,7 @@ public class Swerve extends SubsystemBase {
       this::getSpeed,
       this::driveRobotRelative,
       new HolonomicPathFollowerConfig(
-        new PIDConstants(0.5, 0.0, 0.0),
+        new PIDConstants(1, 0.0, 0.0),
         new PIDConstants(2, 0.0, 0.0),
         2,
         0.8,
@@ -138,6 +141,11 @@ public class Swerve extends SubsystemBase {
     }
   }
 
+  public void setSpeed(double speed){
+    Constants.Swerve.maxSpeed = speed;
+    //this.percentSpeed = speed;
+  }
+
   public SwerveModuleState[] getStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     for (SwerveModule mod : mSwerveMods) {
@@ -165,6 +173,7 @@ public class Swerve extends SubsystemBase {
     positions[3] = mSwerveMods[3].getPosition();
     swerveOdometry.update(getYaw(), positions);
     field.setRobotPose(getPose());
+    SmartDashboard.putNumber("Speed", Constants.Swerve.maxSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(

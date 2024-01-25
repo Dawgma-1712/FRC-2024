@@ -37,7 +37,8 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton lock = new JoystickButton(driver, 1);
+  private final JoystickButton lock = new JoystickButton(driver, 3);
+  private final JoystickButton slow = new JoystickButton(driver, 1);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -75,7 +76,7 @@ public class RobotContainer {
     /* Driver Buttons */
     //zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
     lock.onTrue(new Lock(s_Swerve));
-
+    slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
   }
 
   /**
