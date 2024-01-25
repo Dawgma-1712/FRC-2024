@@ -67,9 +67,9 @@ public class Swerve extends SubsystemBase {
       this::driveRobotRelative,
       new HolonomicPathFollowerConfig(
         new PIDConstants(0.5, 0.0, 0.0),
-        new PIDConstants(0.5, 0.0, 0.0),
-        1,
-        0.4,
+        new PIDConstants(2, 0.0, 0.0),
+        2,
+        0.8,
         new ReplanningConfig()
         ),
         () -> {
@@ -103,7 +103,7 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
     }
     for (SwerveModule mod : mSwerveMods) {
-        mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop, locked);
+        mod.setDesiredState(swerveModuleStates[mod.moduleNumber], false/*isOpenLoop */, locked);
     }
   }
 

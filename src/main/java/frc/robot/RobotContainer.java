@@ -44,7 +44,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
-  private final SendableChooser<Command> autoChooser;
+  private SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     s_Swerve.setDefaultCommand(
@@ -57,7 +57,7 @@ public class RobotContainer {
     
     //Register Named Commands - Temporary
     NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
-    
+
     // Configure the button bindings
     configureButtonBindings();
 
