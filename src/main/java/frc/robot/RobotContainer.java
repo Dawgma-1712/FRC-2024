@@ -56,11 +56,14 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis),
             () -> robotCentric.getAsBoolean()));
     
+
     //Register Named Commands - Temporary
+    //NamedCommands.registerCommand("test", new Lock(s_Swerve));
     NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
 
     // Configure the button bindings
     configureButtonBindings();
+    
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Select Auto", autoChooser);

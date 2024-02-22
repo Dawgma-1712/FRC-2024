@@ -22,7 +22,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import frc.robot.Constants;
 import frc.robot.Debug;
 
-
 public class Swerve extends SubsystemBase {
   //private final Pigeon2 gyro;
   private final AHRS gyro2 = new AHRS(SerialPort.Port.kUSB1);
@@ -47,10 +46,10 @@ public class Swerve extends SubsystemBase {
     locked = false;
     mSwerveMods =
         new SwerveModule[] {
-          new SwerveModule(),
-          new SwerveModule(1, Constants.Swerve.Mod1.constants),
-          new SwerveModule(2, Constants.Swerve.Mod2.constants),
-          new SwerveModule(3, Constants.Swerve.Mod3.constants)
+          new SwerveModule(0, Constants.Swerve.Mod0.constants, 0.0, 0.0, 0.0),
+          new SwerveModule(1, Constants.Swerve.Mod1.constants, 0.1, 0.0, 0.0),
+          new SwerveModule(2, Constants.Swerve.Mod2.constants, 0.0, 0.0, 0.0),
+          new SwerveModule(3, Constants.Swerve.Mod3.constants, 0.0, 0.0, 0.0)
         };
     positions[0] = mSwerveMods[0].getPosition();
     positions[1] = mSwerveMods[1].getPosition();
@@ -70,8 +69,8 @@ public class Swerve extends SubsystemBase {
       this::getSpeed,
       this::driveRobotRelative,
       new HolonomicPathFollowerConfig(
-        new PIDConstants(1, 0.0, 0.0),
-        new PIDConstants(2, 0.0, 0.0),
+        new PIDConstants(1.0, 0.0, 5.0),
+        new PIDConstants(2.0, 0.0, 0.0),
         2,
         0.8,
         new ReplanningConfig()

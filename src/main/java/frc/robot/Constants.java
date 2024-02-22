@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.Map;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -44,13 +46,13 @@ public final class Constants {
     public static final int driveContinuousCurrentLimit = 80;
 
     /* Angle Motor PID Values */
-    public static final double angleKP = 0.01;
+    public static final double angleKP = 0.03;
     public static final double angleKI = 0.0;
     public static final double angleKD = 0.0;
     public static final double angleKFF = 0.0;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.1;
+    public static final double driveKP = 0.3;
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
     public static final double driveKFF = 0.0;
@@ -67,7 +69,7 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
     /* Swerve Profiling Values */
-    public static double maxSpeed = 3; // meters per second
+    public static double maxSpeed = 1; // meters per second
     public static final double maxAngularVelocity = 4;
 
     /* Neutral Modes */
@@ -137,5 +139,37 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
         new TrapezoidProfile.Constraints(
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+  }
+
+  public static final class OperatorConstants{
+    public static final Map<String, Double> armExtendPresets = Map.ofEntries(
+      Map.entry("coneMid", 37.0),
+      Map.entry("coneHigh", 200.0),
+      Map.entry("cubeMid", 30.0),
+      Map.entry("cubeHigh", 200.0),
+      Map.entry("stow", 0.0),
+      Map.entry("substation", 120.0),
+      Map.entry("ground", 0.0));
+    public static final Map<String, Double> armRaisePresets = Map.ofEntries(
+      Map.entry("coneMid", 16.8),
+      Map.entry("coneHigh", 16.0),
+      Map.entry("cubeMid", 18.0),
+      Map.entry("cubeHigh", 17.0),
+      Map.entry("stow", 0.0),
+      Map.entry("substation", 16.2),
+      Map.entry("ground", 28.5));
+    public static final int OperatorControllerPort = 1;
+    public static final int DriverControllerPort = 0;
+    public static final int OperatorRaise = 5;
+    public static final int OperatorExtend = 1;
+
+    public static final int DriverYAxis = 1;
+    public static final int DriverXAxis = 0;
+    public static final int kDriverRotAxis = 2;
+    public static final int DriverFieldOrientedButton = 3;
+
+    public static final double deadband = 0.1;
+    public static final int AAAA = 1;
+
   }
 }
