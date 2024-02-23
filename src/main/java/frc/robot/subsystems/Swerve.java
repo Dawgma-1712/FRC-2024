@@ -19,6 +19,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+
 import frc.robot.Constants;
 import frc.robot.Debug;
 
@@ -186,6 +187,11 @@ public class Swerve extends SubsystemBase {
     SmartDashboard.putBoolean("Lock?", locked);
     SmartDashboard.putNumber("DistanceX", swerveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("DistanceY", swerveOdometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("Robot Heading", swerveOdometry.getPoseMeters().getRotation().getDegrees());
+    SmartDashboard.putNumber("Front Left Rotation", mSwerveMods[0].getAngle().getDegrees());
+    SmartDashboard.putNumber("Front Right Rotation", mSwerveMods[1].getAngle().getDegrees());
+    SmartDashboard.putNumber("Back Left Rotation", mSwerveMods[2].getAngle().getDegrees());
+    SmartDashboard.putNumber("Back Right Rotation",mSwerveMods[3].getAngle().getDegrees());
   }
 
   //Path Planner - AutoBuilder
