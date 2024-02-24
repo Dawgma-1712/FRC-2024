@@ -171,5 +171,20 @@ public final class Constants {
     public static final double deadband = 0.1;
     public static final int AAAA = 1;
 
+    public static final int idsLength = 16;
+
+    //Near station
+    //Far station
+    //Amp
+    //Center speaker
+    //Right speaker
+    //Far stage
+    //Left stage
+    //Right stage
+    public static final Double[] id_Blue = {1.0, 2.0, 6.0, 7.0, 8.0, 14.0, 15.0, 16.0};
+    public static final Double[] id_Red = {10.0, 9.0, 5.0, 4.0, 3.0, 13.0, 12.0, 11.0};
+
+    public static final double yDisplace = 38;
+    public static final double llAngle = 26;
   }
 }

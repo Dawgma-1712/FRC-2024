@@ -6,11 +6,10 @@ import frc.robot.subsystems.*;
 
 public class ArmJoystickCommand extends CommandBase{
     private Arm arm;
-    private Supplier<Double> extendValue, raiseValue;
+    private Supplier<Double> raiseValue;
 
-    public ArmJoystickCommand(Arm arm, Supplier<Double> extendValue, Supplier<Double> raiseValue) {
+    public ArmJoystickCommand(Arm arm, Supplier<Double> raiseValue) {
         this.arm = arm;
-        this.extendValue = extendValue;
         this.raiseValue = raiseValue;
         addRequirements(arm);
     }
@@ -19,9 +18,8 @@ public class ArmJoystickCommand extends CommandBase{
 
     @Override
     public void execute() {
-        double extend = Math.abs(extendValue.get()) > 0.04 ? extendValue.get() : 0;
         double raise = Math.abs(raiseValue.get()) > 0.04 ? raiseValue.get() : 0;
-        arm.manualArm(extend, raise);
+        arm.manualArm(raise);
     }
 
     @Override
