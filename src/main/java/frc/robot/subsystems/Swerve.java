@@ -44,12 +44,26 @@ public class Swerve extends SubsystemBase {
 
     percentSpeed = 1;
     locked = false;
+      // new SwerveModule[] {
+      //     new SwerveModule(0, Constants.Swerve.Mod0.constants, 
+      //     0.03, 0.0, 0.15,
+      //     0.3, 0, 0),
+      //     new SwerveModule(1, Constants.Swerve.Mod1.constants, 
+      //     0.022, 0.0, 0.11,
+      //     1.5, 0, 0),
+      //     new SwerveModule(2, Constants.Swerve.Mod2.constants, 
+      //     0.026, 0.0, 0.12,
+      //     0.3, 0, 0),
+      //     new SwerveModule(3, Constants.Swerve.Mod3.constants, 
+      //     0.023, 0.0, 0.11,
+      //     0.3, 0, 0)
+      //   };
     mSwerveMods =
         new SwerveModule[] {
-          new SwerveModule(0, Constants.Swerve.Mod0.constants, 0.05, 0.0, 0.0),
-          new SwerveModule(1, Constants.Swerve.Mod1.constants, 0.051, 0.0, 0.0),
-          new SwerveModule(2, Constants.Swerve.Mod2.constants, 0.01, 0.0, 0.0),
-          new SwerveModule(3, Constants.Swerve.Mod3.constants, 0.01, 0.0, 0.0)
+          new SwerveModule(0, Constants.Swerve.Mod0.constants, 0.03, 0.0, 0.15),
+          new SwerveModule(1, Constants.Swerve.Mod1.constants, 0.022, 0.0, 0.11),
+          new SwerveModule(2, Constants.Swerve.Mod2.constants, 0.026, 0.0, 0.12),
+          new SwerveModule(3, Constants.Swerve.Mod3.constants, 0.023, 0.0, 0.11)
         };
     positions[0] = mSwerveMods[0].getPosition();
     positions[1] = mSwerveMods[1].getPosition();
@@ -69,10 +83,10 @@ public class Swerve extends SubsystemBase {
       this::getSpeed,
       this::driveRobotRelative,
       new HolonomicPathFollowerConfig(
-        new PIDConstants(1.0, 0.0, 6.0),
-        new PIDConstants(2.0, 0.0, 0.0),
-        2,
-        0.8,
+        new PIDConstants(0.01, 0.0, 0.1),
+        new PIDConstants(0.1, 0.0, 0.0),
+        Constants.AutoConstants.kMaxSpeedMetersPerSecond,
+        Constants.Swerve.wheelBase * Math.sqrt(2)/2,
         new ReplanningConfig()
         ),
         () -> {
@@ -88,6 +102,9 @@ public class Swerve extends SubsystemBase {
 
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+        SmartDashboard.putNumber("rotation", rotation);
+        SmartDashboard.putNumber("XSpeed", translation.getX());
+        SmartDashboard.putNumber("YSpeed", translation.getY());
     SwerveModuleState[] swerveModuleStates = new SwerveModuleState[4];
     //Debug.log(5, "Drive locked" + Boolean.toString(locked));
     if(locked){
@@ -125,6 +142,12 @@ public class Swerve extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     swerveOdometry.resetPosition(getYaw(), positions, pose);
+  }
+
+  public void resetEncoders() {
+    for (SwerveModule mod : mSwerveMods) {
+      mod.resetToAbsolute();
+    }
   }
 
   public boolean getLockedState(){
@@ -173,15 +196,14 @@ public class Swerve extends SubsystemBase {
     positions[3] = mSwerveMods[3].getPosition();
     swerveOdometry.update(getYaw(), positions);
     field.setRobotPose(getPose());
-    SmartDashboard.putNumber("Speed", Constants.Swerve.maxSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
-      SmartDashboard.putNumber(
-          "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+      // SmartDashboard.putNumber(
+      //     "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
     SmartDashboard.putBoolean("Lock?", locked);
     SmartDashboard.putNumber("DistanceX", swerveOdometry.getPoseMeters().getX());
@@ -192,6 +214,7 @@ public class Swerve extends SubsystemBase {
   public ChassisSpeeds getSpeed(){
     return Constants.Swerve.swerveKinematics.toChassisSpeeds(getStates());
   }
+
   public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
     
     ChassisSpeeds targetSpeeds = robotRelativeSpeeds;//ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);

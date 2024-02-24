@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import frc.lib.config.CTREConfigs;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static CTREConfigs ctreConfigs = new CTREConfigs();
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    m_robotContainer.s_Swerve.resetEncoders();
   }
 
   /** This function is called periodically during autonomous. */
@@ -77,6 +79,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    m_robotContainer.s_Swerve.resetEncoders();
+
   }
 
   /** This function is called periodically during operator control. */

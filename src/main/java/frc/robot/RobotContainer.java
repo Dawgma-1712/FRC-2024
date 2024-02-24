@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -41,7 +42,7 @@ public class RobotContainer {
   private final JoystickButton slow = new JoystickButton(driver, 1);
 
   /* Subsystems */
-  private final Swerve s_Swerve = new Swerve();
+  public final Swerve s_Swerve = new Swerve();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -61,7 +62,7 @@ public class RobotContainer {
     //NamedCommands.registerCommand("test", new Lock(s_Swerve));
     NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
 
-    // Configure the button bindings
+    // Configure the button bindingszeroGyro
     configureButtonBindings();
     
 
@@ -77,7 +78,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     /* Driver Buttons */
-    //zeroGyro.whenPressed(new InstantCommand(() -> s_Swerve.zeroGyro()));
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     lock.onTrue(new Lock(s_Swerve));
     slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
   }

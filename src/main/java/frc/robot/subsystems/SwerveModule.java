@@ -12,6 +12,9 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Velocity;
 import frc.lib.config.SwerveModuleConstants;
 import frc.lib.math.OnboardModuleState;
 import frc.lib.util.CANCoderUtil;
@@ -20,6 +23,7 @@ import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
 import frc.robot.Debug;
+import frc.robot.Robot;
 
 public class SwerveModule {
   public int moduleNumber;
@@ -36,26 +40,31 @@ public class SwerveModule {
   private final SparkPIDController driveController;
   private final SparkPIDController angleController;
 
-  private double kP;
-  private double kI;
-  private double kD;
+  private double angleKP;
+  private double angleKI;
+  private double angleKD;
+  private double driveKP;
+  private double driveKI;
+  private double driveKD;
 
   private final SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
           Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
-  public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants, double kP, double kI, double kD) {
+  public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants, double angleKP, double angleKI, double angleKD) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
 
-    this.kP = kP;
-    this.kI = kI;
-    this.kD = kD;
+    this.angleKP = angleKP;
+    this.angleKI = angleKI;
+    this.angleKD = angleKD;
+    this.driveKP = driveKP;
+    this.driveKI = driveKI;
+    this.driveKD = driveKD;
 
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
     configAngleEncoder();
-    //resetToAbsolute();
 
     /* Angle Motor Config */
     angleMotor = new CANSparkMax(moduleConstants.angleMotorID, MotorType.kBrushless);
@@ -84,17 +93,15 @@ public class SwerveModule {
     setSpeed(desiredState, isOpenLoop);
   }
 
-  private void resetToAbsolute() {
-    double absolutePosition = getCanCoder().getDegrees() - angleOffset.getDegrees();
+  public void resetToAbsolute() {
+    double absolutePosition = getCanCoder().getDegrees();
     integratedAngleEncoder.setPosition(absolutePosition);
   }
 
   private void configAngleEncoder() {
     angleEncoder.configFactoryDefault();
     CANCoderUtil.setCANCoderBusUsage(angleEncoder, CCUsage.kMinimal);
-    //angleEncoder.configAllSettings(Robot.CTREConfigs.swerveCanCoderConfig);//Robot.ctreConfigs.swerveCanCoderConfig);
-
-    //NOTE THAT THIS CODE MAY BE NEEDED - COMMENTED OUT DUE TO METHOD NOT FOUND
+    angleEncoder.configAllSettings(Robot.ctreConfigs.swerveCanCoderConfig);
   }
 
   private void configAngleMotor() {
@@ -104,9 +111,9 @@ public class SwerveModule {
     angleMotor.setInverted(Constants.Swerve.angleInvert);
     angleMotor.setIdleMode(Constants.Swerve.angleNeutralMode);
     integratedAngleEncoder.setPositionConversionFactor(Constants.Swerve.angleConversionFactor);
-    angleController.setP(kP);
-    angleController.setI(kI);
-    angleController.setD(kD);
+    angleController.setP(angleKP);
+    angleController.setI(angleKI);
+    angleController.setD(angleKD);
     angleController.setFF(Constants.Swerve.angleKFF);
     angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
     angleMotor.burnFlash();
@@ -164,7 +171,7 @@ public class SwerveModule {
   }
 
   public Rotation2d getCanCoder() {
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() - angleOffset.getDegrees());
   }
 
   public SwerveModuleState getState() {
