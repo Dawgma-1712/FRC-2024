@@ -38,8 +38,6 @@ public class Swerve extends SubsystemBase {
   private double percentSpeed;
 
   public Swerve() {
-    //gyro = new Pigeon2(Constants.Swerve.pigeonID);
-    //gyro.configFactoryDefault();
     zeroGyro();
 
     percentSpeed = 1;
