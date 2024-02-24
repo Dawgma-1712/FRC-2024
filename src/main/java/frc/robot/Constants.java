@@ -188,7 +188,9 @@ public final class Constants {
     public static final double llAngle = 26;
 
     public static final double[] aprilTagX = {593.68, 637.21, 652.73, 652.73, 578.77, 72.5, -1.5, -1.5, 14.02, 57.54, 468.69, 468.69, 441.74, 209.48, 182.73, 182.73};
+    public static final double[] goalX = {-12, -12, -12, -12, -12, -12, 12, 12, -12, -12, -12, -12, -12, -12, -12, -12};
     public static final double[] aprilTagY = {9.68, 34.79, 196.17, 218.42, 323, 323, 218.42, 196.17, 34.79, 9.68, 146.19, 177.1, 161.62, 161.62, 177.1, 146.19};
     public static final double[] aprilTagZ = {53.38, 53.38, 57.13, 57.13, 53.38, 53.38, 57.13, 57.13, 53.38, 53.38, 52, 52, 52, 52, 52, 52};
+    public static final double[] aprilTagYaw = {120, 120, 180, 180, 270, 270, 0, 0, 60, 60, 300, 60, 180, 0, 120, 240};
   }
 }
