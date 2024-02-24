@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,7 +24,8 @@ public class Robot extends TimedRobot {
   private AddressableLED m_led;
   private AddressableLEDBuffer m_ledBuffer;
   private RobotContainer m_robotContainer;
-
+  private int m_rainbowFirstPixelHue;
+  private int[] rgb;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -43,10 +45,6 @@ public class Robot extends TimedRobot {
     m_led.setData(m_ledBuffer);
     m_led.start();
 
-    int[] rgb = m_led.currentRGB();
-    for (int i = 0; i<m_ledBuffer.getLength(); i++){
-      m_ledBuffer.setRBG(i, m_led.currentRGB[0]. )
-    }
   }
 
   /**
@@ -56,6 +54,17 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before LiveWindow and
    * SmartDashboard integrated updating.
    */
+  private void rainbow(){
+        
+    for (int i = 0; i < m_ledBuffer.getLength(); i++){
+        final var hue = (m_rainbowFirstPixelHue + (i*180/m_ledBuffer.getLength()) % 180);
+        m_ledBuffer.setHSV(i, hue, 255, 128);
+      }
+      
+      m_rainbowFirstPixelHue += 3;
+      m_rainbowFirstPixelHue %= 180;
+  }
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -63,7 +72,17 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-  }
+    rgb = m_robotContainer.returnColor();
+    if (rgb[3] != 2){
+      for (int i = 0; i<m_ledBuffer.getLength(); i++){
+        m_ledBuffer.setRGB(i, rgb[0], rgb[1], rgb[2]);}
+    }else{
+      rainbow();
+    }
+    m_led.setData(m_ledBuffer);
+}
+
+
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override

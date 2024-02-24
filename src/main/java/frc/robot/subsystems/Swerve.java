@@ -22,6 +22,8 @@ import com.pathplanner.lib.util.ReplanningConfig;
 
 import frc.robot.Constants;
 import frc.robot.Debug;
+import frc.robot.commands.LED;
+import frc.robot.subsystems.*;
 
 public class Swerve extends SubsystemBase {
   //private final Pigeon2 gyro;
@@ -132,6 +134,7 @@ public class Swerve extends SubsystemBase {
 
   public void setLock(boolean locked){
     this.locked = locked;
+    LED.setState(5, locked);
   }
 
   public void stopModules(){

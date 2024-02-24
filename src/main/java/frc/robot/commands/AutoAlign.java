@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 import frc.robot.Constants;
+import frc.robot.commands.*;
 
 public class AutoAlign extends Command{
 
@@ -78,16 +79,22 @@ public class AutoAlign extends Command{
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(chassisSpeeds);
 
         swerve.setModuleStates(swerveModuleStates);
+
+        LED.setState(3, true);
     }
 
     public void end(boolean interrupted) {
         swerve.stopModules();
+        LED.setState(3, false);
+        LED.setState(4, true);
+
     }
 
     public boolean isFinished() {
         return (Math.abs(vision.getFieldX() - xGoal) < 10
         && Math.abs(vision.getFieldY() - yGoal) < 10
         && Math.abs(vision.getFieldYaw() - yawGoal) < 10) || vision.getTA() <= 0;
+
     }
     
 }

@@ -68,6 +68,7 @@ public class Vision extends SubsystemBase {
     fieldYaw = llArr[0].getRobotPose_FieldSpace().getZ();
 
     if(llArr.length > 0) {
+        SmartDashboard.putNumber("Current ID", tid);
         SmartDashboard.putNumber("Distance", getDistance());
         SmartDashboard.putNumber("X", fieldX);
         SmartDashboard.putNumber("Y", fieldY);

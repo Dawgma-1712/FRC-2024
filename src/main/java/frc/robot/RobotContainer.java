@@ -43,7 +43,10 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
-  private final Vision limelight = new Vision();
+
+   private LED color = new LED();
+   private final Vision limelight = new Vision();
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -94,5 +97,8 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     //return new exampleAuto(s_Swerve);
     return autoChooser.getSelected();
+  }
+  public int[] returnColor(){
+    return color.currentRGB();
   }
 }
