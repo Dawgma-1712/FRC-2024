@@ -85,9 +85,9 @@ public class AutoAlign extends Command{
     }
 
     public boolean isFinished() {
-        return Math.abs(vision.getFieldX() - xGoal) < 10
+        return (Math.abs(vision.getFieldX() - xGoal) < 10
         && Math.abs(vision.getFieldY() - yGoal) < 10
-        && Math.abs(vision.getFieldYaw() - yawGoal) < 10;
+        && Math.abs(vision.getFieldYaw() - yawGoal) < 10) || vision.getTA() <= 0;
     }
     
 }
