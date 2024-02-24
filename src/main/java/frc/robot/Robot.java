@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -15,8 +18,10 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  private DigitalInput mangeticLimitSwitch;
   private Command m_autonomousCommand;
-
+  private AddressableLED m_led;
+  private AddressableLEDBuffer m_ledBuffer;
   private RobotContainer m_robotContainer;
 
   /**
@@ -27,7 +32,21 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    mangeticLimitSwitch = new DigitalInput(0); //NO IDEA EITHER PLEASE CHANGE YAYAYAYYAYAYYAYAYA :DDDDD!!!! 
     m_robotContainer = new RobotContainer();
+    //pwm
+    m_led = new AddressableLED(0); //no idea port PLEASE CHANGE :D
+
+    m_ledBuffer = new AddressableLEDBuffer(60); //change length
+    m_led.setLength(m_ledBuffer.getLength());
+
+    m_led.setData(m_ledBuffer);
+    m_led.start();
+
+    int[] rgb = m_led.currentRGB();
+    for (int i = 0; i<m_ledBuffer.getLength(); i++){
+      m_ledBuffer.setRBG(i, m_led.currentRGB[0]. )
+    }
   }
 
   /**
