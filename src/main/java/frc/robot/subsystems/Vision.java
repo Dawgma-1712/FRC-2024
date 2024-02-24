@@ -20,11 +20,12 @@ import frc.robot.LimelightHelpers;
 
 public class Vision extends SubsystemBase {
   private final NetworkTable m_limelightTable;
-  private double tv, tx, ta, ty, tid;
+  private double tv, tx, ta, ty, tid, fieldX, fieldY, fieldZ, fieldRoll, fieldPitch, fieldYaw;
   private ArrayList<Double> m_targetList;
   private final int MAX_ENTRIES = 50;
   private final NetworkTableEntry m_led_entry;
   private final DoubleArraySubscriber botposeSigh;
+  private double[] botpose;
   private int idIndex = 0;
 
   /**
@@ -45,7 +46,7 @@ public class Vision extends SubsystemBase {
     ty = m_limelightTable.getEntry("ty").getDouble(0);
     ta = m_limelightTable.getEntry("ta").getDouble(0);
     tid = m_limelightTable.getEntry("tid").getDouble(0);
-    double[] botposeArray = botposeSigh.get();
+    botpose = m_limelightTable.getEntry("botpose").getDoubleArray(new double[6]);
     //x, y, z, roll, pitch, yaw
 
 
@@ -59,15 +60,46 @@ public class Vision extends SubsystemBase {
     LimelightHelpers.LimelightTarget_Fiducial[] llArr = llresults.targetingResults.targets_Fiducials;
 
 
+    fieldX = llArr[0].getRobotPose_FieldSpace().getX();
+    fieldY = llArr[0].getRobotPose_FieldSpace().getY();
+    fieldZ = llArr[0].getRobotPose_FieldSpace().getZ();
+    fieldRoll = llArr[0].getRobotPose_FieldSpace().getX();
+    fieldPitch = llArr[0].getRobotPose_FieldSpace().getY();
+    fieldYaw = llArr[0].getRobotPose_FieldSpace().getZ();
+
     if(llArr.length > 0) {
         SmartDashboard.putNumber("Distance", getDistance());
-        SmartDashboard.putNumber("X", llArr[0].getRobotPose_FieldSpace().getX());
-        SmartDashboard.putNumber("Y", llArr[0].getRobotPose_FieldSpace().getY());
-        SmartDashboard.putNumber("Z", llArr[0].getRobotPose_FieldSpace().getZ());
-        SmartDashboard.putNumber("Roll", llArr[0].getRobotPose_FieldSpace().getRotation().getX());
-        SmartDashboard.putNumber("Pitch", llArr[0].getRobotPose_FieldSpace().getRotation().getY());
-        SmartDashboard.putNumber("Yaw", llArr[0].getRobotPose_FieldSpace().getRotation().getZ());
+        SmartDashboard.putNumber("X", fieldX);
+        SmartDashboard.putNumber("Y", fieldY);
+        SmartDashboard.putNumber("Z", fieldZ);
+        SmartDashboard.putNumber("Roll", fieldRoll);
+        SmartDashboard.putNumber("Pitch", fieldPitch);
+        SmartDashboard.putNumber("Yaw", fieldYaw);
     }
+  }
+
+  public double getFieldX() {
+    return fieldX;
+  }
+
+  public double getFieldY() {
+    return fieldY;
+  }
+
+  public double getFieldZ() {
+    return fieldZ;
+  }
+
+  public double getFieldRoll() {
+    return fieldRoll;
+  }
+
+  public double getFieldPitch() {
+    return fieldPitch;
+  }
+
+  public double getFieldYaw() {
+    return fieldYaw;
   }
 
   public double getTX() {
