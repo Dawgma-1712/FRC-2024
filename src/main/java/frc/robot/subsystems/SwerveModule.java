@@ -19,7 +19,6 @@ import frc.lib.util.CANCoderUtil.CCUsage;
 import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
-import frc.robot.Debug;
 
 public class SwerveModule {
   public int moduleNumber;
@@ -39,18 +38,19 @@ public class SwerveModule {
   private double kP;
   private double kI;
   private double kD;
+  private double kFF;
 
   private final SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
           Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
-  public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants, double kP, double kI, double kD) {
+  public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
-
-    this.kP = kP;
-    this.kI = kI;
-    this.kD = kD;
+    kP = moduleConstants.kP;
+    kI = moduleConstants.kI;
+    kD = moduleConstants.kD;
+    kFF = moduleConstants.kFF;
 
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
@@ -107,7 +107,7 @@ public class SwerveModule {
     angleController.setP(kP);
     angleController.setI(kI);
     angleController.setD(kD);
-    angleController.setFF(Constants.Swerve.angleKFF);
+    angleController.setFF(kFF);
     angleMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);
     angleMotor.burnFlash();
     resetToAbsolute();

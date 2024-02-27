@@ -1,36 +1,23 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.*;
+import edu.wpi.first.math.kinematics.*;
+import frc.robot.commands.*;
+import frc.robot.Constants;
+import com.pathplanner.lib.util.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import com.kauailabs.navx.frc.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
-import com.kauailabs.navx.frc.*;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
-
-
-import frc.robot.Constants;
-import frc.robot.Debug;
-import frc.robot.commands.LED;
-import frc.robot.subsystems.*;
 
 public class Swerve extends SubsystemBase {
   //private final Pigeon2 gyro;
   private final AHRS gyro2 = new AHRS(SerialPort.Port.kUSB1);
 
   private SwerveDriveOdometry swerveOdometry;
-  private SwerveModulePosition[] positions = new SwerveModulePosition[4];
+  private SwerveModulePosition[] swerveModPositions = new SwerveModulePosition[4];
 
   private SwerveModule[] mSwerveMods;
 
@@ -41,25 +28,26 @@ public class Swerve extends SubsystemBase {
   private double percentSpeed;
 
   public Swerve() {
-    zeroGyro();
 
+    zeroGyro();
     percentSpeed = 1;
     locked = false;
     mSwerveMods =
         new SwerveModule[] {
-          new SwerveModule(0, Constants.Swerve.Mod0.constants, 0.05, 0.0, 0.0),
-          new SwerveModule(1, Constants.Swerve.Mod1.constants, 0.051, 0.0, 0.0),
-          new SwerveModule(2, Constants.Swerve.Mod2.constants, 0.01, 0.0, 0.0),
-          new SwerveModule(3, Constants.Swerve.Mod3.constants, 0.01, 0.0, 0.0)
+          new SwerveModule(0, Constants.Swerve.Mod0.constants),
+          new SwerveModule(1, Constants.Swerve.Mod1.constants),
+          new SwerveModule(2, Constants.Swerve.Mod2.constants),
+          new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
-    positions[0] = mSwerveMods[0].getPosition();
-    positions[1] = mSwerveMods[1].getPosition();
-    positions[2] = mSwerveMods[2].getPosition();
-    positions[3] = mSwerveMods[3].getPosition();
+    
+    for(int i = 0; i < swerveModPositions.length; i++){
+      swerveModPositions[i] = mSwerveMods[i].getPosition();
+    }
+
     swerveOdometry = new SwerveDriveOdometry(
           Constants.Swerve.swerveKinematics, 
           getYaw(),
-          positions);
+          swerveModPositions);
     field = new Field2d();
     SmartDashboard.putData("Field", field);
 
@@ -70,10 +58,10 @@ public class Swerve extends SubsystemBase {
       this::getSpeed,
       this::driveRobotRelative,
       new HolonomicPathFollowerConfig(
-        new PIDConstants(1.0, 0.0, 6.0),
-        new PIDConstants(2.0, 0.0, 0.0),
-        2,
-        0.8,
+        new PIDConstants(Constants.Swerve.translationKP, Constants.Swerve.translationKI, Constants.Swerve.translationKD),
+        new PIDConstants(Constants.Swerve.rotationKP, Constants.Swerve.rotationKI, Constants.Swerve.rotationKD),
+        Constants.Swerve.maxModuleSpeed,
+        Constants.Swerve.driveBaseRadius,
         new ReplanningConfig()
         ),
         () -> {
@@ -90,7 +78,6 @@ public class Swerve extends SubsystemBase {
   public void drive(
       Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
     SwerveModuleState[] swerveModuleStates = new SwerveModuleState[4];
-    //Debug.log(5, "Drive locked" + Boolean.toString(locked));
     if(locked){
         swerveModuleStates[0] = new SwerveModuleState(0, new Rotation2d(Math.PI/4.0));
         swerveModuleStates[1] = new SwerveModuleState(0, new Rotation2d(-Math.PI/4.0));
@@ -125,7 +112,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(getYaw(), positions, pose);
+    swerveOdometry.resetPosition(getYaw(), swerveModPositions, pose);
   }
 
   public boolean getLockedState(){
@@ -169,11 +156,10 @@ public class Swerve extends SubsystemBase {
 
   @Override
   public void periodic() {
-    positions[0] = mSwerveMods[0].getPosition();
-    positions[1] = mSwerveMods[1].getPosition();
-    positions[2] = mSwerveMods[2].getPosition();
-    positions[3] = mSwerveMods[3].getPosition();
-    swerveOdometry.update(getYaw(), positions);
+    for(int i = 0; i < swerveModPositions.length; i++){
+      swerveModPositions[i] = mSwerveMods[i].getPosition();
+    }
+    swerveOdometry.update(getYaw(), swerveModPositions);
     field.setRobotPose(getPose());
     SmartDashboard.putNumber("Speed", Constants.Swerve.maxSpeed);
 
@@ -206,6 +192,4 @@ public class Swerve extends SubsystemBase {
     SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
     setModuleStates(targetStates);
   }
-
-
 }
