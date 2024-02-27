@@ -50,9 +50,11 @@ public class AutoAlign extends Command{
             Constants.Swerve.angleKD);
 
 
-        xGoal = Constants.OperatorConstants.aprilTagX[(int)(vision.getTID()) - 1];
-        yGoal = Constants.OperatorConstants.aprilTagY[(int)(vision.getTID()) - 1];
-        yawGoal = Constants.OperatorConstants.aprilTagYaw[(int)(vision.getTID()) - 1];
+        if(vision.getTID() > 0) {
+            xGoal = Constants.OperatorConstants.aprilTagX[(int)(vision.getTID()) - 1];
+            yGoal = Constants.OperatorConstants.aprilTagY[(int)(vision.getTID()) - 1];
+            yawGoal = Constants.OperatorConstants.aprilTagYaw[(int)(vision.getTID()) - 1];
+        }
 
         addRequirements(swerve);
     }
@@ -81,6 +83,8 @@ public class AutoAlign extends Command{
         swerve.setModuleStates(swerveModuleStates);
 
         LED.setState(3, true);
+
+        System.out.println("Autoaligning");
     }
 
     public void end(boolean interrupted) {

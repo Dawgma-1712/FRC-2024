@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.DoubleArraySubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -59,13 +60,14 @@ public class Vision extends SubsystemBase {
     LimelightHelpers.LimelightResults llresults = LimelightHelpers.getLatestResults("");
     LimelightHelpers.LimelightTarget_Fiducial[] llArr = llresults.targetingResults.targets_Fiducials;
 
-
-    fieldX = llArr[0].getRobotPose_FieldSpace().getX();
+    if(llArr.length > 0) {
+    fieldX = -llArr[0].getRobotPose_FieldSpace().getX();
     fieldY = llArr[0].getRobotPose_FieldSpace().getY();
     fieldZ = llArr[0].getRobotPose_FieldSpace().getZ();
-    fieldRoll = llArr[0].getRobotPose_FieldSpace().getX();
-    fieldPitch = llArr[0].getRobotPose_FieldSpace().getY();
-    fieldYaw = llArr[0].getRobotPose_FieldSpace().getZ();
+    fieldRoll = llArr[0].getRobotPose_FieldSpace().getRotation().getX();
+    fieldPitch = llArr[0].getRobotPose_FieldSpace().getRotation().getY();
+    fieldYaw = llArr[0].getRobotPose_FieldSpace().getRotation().getZ();
+    }
 
     if(llArr.length > 0) {
         SmartDashboard.putNumber("Current ID", tid);
@@ -121,7 +123,8 @@ public class Vision extends SubsystemBase {
   }
 
   public double getDistance() {
-    return Constants.OperatorConstants.yDisplace * Math.tan((90 - Constants.OperatorConstants.llAngle - getTY()) * Math.PI/180) - 2;
+    //return Constants.OperatorConstants.yDisplace * Math.tan((90 - Constants.OperatorConstants.llAngle - getTY()) * Math.PI/180) - 2;
+    return Math.sqrt(Math.pow(fieldX-Units.inchesToMeters(Constants.OperatorConstants.aprilTagX[(int)(getTID() - 1)]), 2) + Math.pow(fieldY-Units.inchesToMeters(Constants.OperatorConstants.aprilTagY[(int)(getTID() - 1)]), 2));
   }
 
   public double getTID() {
