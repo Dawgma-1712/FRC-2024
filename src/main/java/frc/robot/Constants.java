@@ -200,8 +200,8 @@ public final class Constants {
       Map.entry("ground", 28.5));
     public static final int OperatorControllerPort = 1;
     public static final int DriverControllerPort = 0;
-    public static final int OperatorRaise = 5;
-    public static final int OperatorExtend = 1;
+    public static final int OperatorArm = 5;
+    //public static final int OperatorExtend = 1;
 
     public static final int DriverYAxis = 1;
     public static final int DriverXAxis = 0;

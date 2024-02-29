@@ -10,10 +10,13 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -25,7 +28,8 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Controllers */
-  private final Joystick driver = new Joystick(0);
+  private final Joystick driver = new Joystick(OperatorConstants.DriverControllerPort);
+  private final Joystick operator = new Joystick(OperatorConstants.OperatorControllerPort);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -38,14 +42,21 @@ public class RobotContainer {
   private final JoystickButton robotCentric =
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton lock = new JoystickButton(driver, 3);
-  private final JoystickButton slow = new JoystickButton(driver, 1);
-  private final JoystickButton autoAlign = new JoystickButton(driver, 2);
+  private final JoystickButton slow = new JoystickButton(driver, 6);
+  private final JoystickButton autoAlign = new JoystickButton(driver, 1);
+  private final JoystickButton climb = new JoystickButton(driver, 4);
+  private final JoystickButton intakeB = new JoystickButton(driver, Button.kLeftBumper.value);
+  private final JoystickButton launch = new JoystickButton(driver, Button.kRightBumper.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
-
-   private LED color = new LED();
-   private final Vision limelight = new Vision();
+  private final Arm arm = new Arm();
+  private final Extender extender = new Extender();
+  private final Launcher launcher = new Launcher();
+  private final Intake intake = new Intake();
+  private final BeamBreak beamBreak = new BeamBreak();
+  private LED color = new LED();
+  private final Vision limelight = new Vision();
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -61,7 +72,10 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis),
             () -> robotCentric.getAsBoolean()));
     
-
+    arm.setDefaultCommand(new ArmJoystickCommand(
+      arm,
+      () -> -operator.getRawAxis(OperatorConstants.OperatorArm)
+     )); 
     //Register Named Commands - Temporary
     //NamedCommands.registerCommand("test", new Lock(s_Swerve));
     NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
@@ -86,6 +100,13 @@ public class RobotContainer {
     lock.onTrue(new Lock(s_Swerve));
     slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
     autoAlign.onTrue(new AutoAlign(s_Swerve, limelight));
+    climb.onTrue(new Climber(arm, extender));
+    launch.onTrue(new LauncherCMD(launcher, beamBreak));
+    intakeB.onTrue(new IntakeCMD(intake, beamBreak));
+
+    new Trigger(beamBreak::beamBreak)
+        .onTrue(new AutoAlign(s_Swerve, limelight));
+
   }
 
   /**
