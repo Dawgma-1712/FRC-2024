@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -13,11 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.Timer;
+
 import com.kauailabs.navx.frc.*;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+import frc.robot.LimelightHelpers;
 
 import frc.robot.Constants;
 import frc.robot.Debug;
@@ -26,7 +30,7 @@ public class Swerve extends SubsystemBase {
   //private final Pigeon2 gyro;
   private final AHRS gyro2 = new AHRS(SerialPort.Port.kUSB1);
 
-  private SwerveDriveOdometry swerveOdometry;
+  private SwerveDrivePoseEstimator swervePoseEstimator;
   private SwerveModulePosition[] positions = new SwerveModulePosition[4];
 
   private SwerveModule[] mSwerveMods;
@@ -69,10 +73,12 @@ public class Swerve extends SubsystemBase {
     positions[1] = mSwerveMods[1].getPosition();
     positions[2] = mSwerveMods[2].getPosition();
     positions[3] = mSwerveMods[3].getPosition();
-    swerveOdometry = new SwerveDriveOdometry(
+    // need to add a defualt
+    swervePoseEstimator = new SwerveDrivePoseEstimator(
           Constants.Swerve.swerveKinematics, 
           getYaw(),
-          positions);
+          positions,
+          new Pose2d());
     field = new Field2d();
     SmartDashboard.putData("Field", field);
 
@@ -137,11 +143,11 @@ public class Swerve extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return swerveOdometry.getPoseMeters();
+    return swervePoseEstimator.getEstimatedPosition();
   }
 
   public void resetOdometry(Pose2d pose) {
-    swerveOdometry.resetPosition(getYaw(), positions, pose);
+    swervePoseEstimator.resetPosition(getYaw(), positions, pose);
   }
 
   public void resetEncoders() {
@@ -194,7 +200,9 @@ public class Swerve extends SubsystemBase {
     positions[1] = mSwerveMods[1].getPosition();
     positions[2] = mSwerveMods[2].getPosition();
     positions[3] = mSwerveMods[3].getPosition();
-    swerveOdometry.update(getYaw(), positions);
+    swervePoseEstimator.update(getYaw(), positions);
+
+    // swervePoseEstimator.addVisionMeasurement(LimelightHelpers.getBotPose2d(""), Timer.getFPGATimestamp()-(LimelightHelpers.getLatency_Pipeline("") + LimelightHelpers.getLatency_Capture("") + 0.1));
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
@@ -206,8 +214,8 @@ public class Swerve extends SubsystemBase {
       //     "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
     SmartDashboard.putBoolean("Lock?", locked);
-    SmartDashboard.putNumber("DistanceX", swerveOdometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("DistanceY", swerveOdometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("DistanceX", getPose().getX());
+    SmartDashboard.putNumber("DistanceY", getPose().getY());
   }
 
   //Path Planner - AutoBuilder
@@ -222,6 +230,4 @@ public class Swerve extends SubsystemBase {
     SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
     setModuleStates(targetStates);
   }
-
-
 }

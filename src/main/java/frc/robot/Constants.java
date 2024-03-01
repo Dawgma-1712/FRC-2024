@@ -56,9 +56,9 @@ public final class Constants {
 
     /* Swerve Autonomous PID Values & Configuration */
     public static final double translationKP = 0.01;
-    public static final double translationKI = 0.1;
-    public static final double translationKD = 0.1;
-    public static final double rotationKP = 0.1;
+    public static final double translationKI = 0.0;
+    public static final double translationKD = 0.0;
+    public static final double rotationKP = 0.0001;
     public static final double rotationKI = 0.0;
     public static final double rotationKD = 0.0;
     public static final double maxModuleSpeed = 2.0;
@@ -134,7 +134,7 @@ public final class Constants {
 
   
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 5;
+    public static final double kMaxSpeedMetersPerSecond = 2;
     public static final double kMaxAccelerationMetersPerSecondSquared = 2;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
