@@ -1,0 +1,95 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.84,
+        "y": 4.84
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.8444544755593222,
+        "y": 4.93428207022618
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.14,
+        "y": 5.57
+      },
+      "prevControl": {
+        "x": 1.5905232019072897,
+        "y": 5.546015664324745
+      },
+      "nextControl": {
+        "x": 2.6679664170139152,
+        "y": 5.593045420325076
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.835943131345722,
+        "y": 5.57
+      },
+      "prevControl": {
+        "x": 1.3285027928614412,
+        "y": 5.583800717150984
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "ShootEvent",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    },
+    {
+      "name": "PickupEvent",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": []
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0,
+    "rotateFast": true
+  },
+  "reversed": false,
+  "folder": "Middle",
+  "previewStartingState": {
+    "rotation": 149.54262470673135,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
