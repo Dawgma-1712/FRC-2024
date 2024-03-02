@@ -84,7 +84,7 @@ public class Swerve extends SubsystemBase {
 
     //Path Planner - AutoBuilder
     AutoBuilder.configureHolonomic(
-       this::getPose,
+      this::getPose,
       this::resetOdometry,
       this::getSpeed,
       this::driveRobotRelative,
@@ -200,9 +200,13 @@ public class Swerve extends SubsystemBase {
     positions[1] = mSwerveMods[1].getPosition();
     positions[2] = mSwerveMods[2].getPosition();
     positions[3] = mSwerveMods[3].getPosition();
-    swervePoseEstimator.update(getYaw(), positions);
+    swervePoseEstimator.updateWithTime(Timer.getFPGATimestamp(), getYaw(), positions);
 
-    // swervePoseEstimator.addVisionMeasurement(LimelightHelpers.getBotPose2d(""), Timer.getFPGATimestamp()-(LimelightHelpers.getLatency_Pipeline("") + LimelightHelpers.getLatency_Capture("") + 0.1));
+    // if(LimelightHelpers.getTV("")){
+    //   double latency = LimelightHelpers.getLatency_Pipeline("") + LimelightHelpers.getLatency_Capture("");
+    //   double timestamp = Timer.getFPGATimestamp()-latency;
+    //   swervePoseEstimator.addVisionMeasurement(LimelightHelpers.getBotPose2d(""), timestamp);
+    // }
     field.setRobotPose(getPose());
 
     for (SwerveModule mod : mSwerveMods) {
@@ -214,8 +218,8 @@ public class Swerve extends SubsystemBase {
       //     "Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
     }
     SmartDashboard.putBoolean("Lock?", locked);
-    SmartDashboard.putNumber("DistanceX", getPose().getX());
-    SmartDashboard.putNumber("DistanceY", getPose().getY());
+    SmartDashboard.putNumber("FieldX", getPose().getX());
+    SmartDashboard.putNumber("FieldY", getPose().getY());
   }
 
   //Path Planner - AutoBuilder

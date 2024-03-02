@@ -179,7 +179,7 @@ public class SwerveModule {
   }
 
   public SwerveModulePosition getPosition(){
-    return new SwerveModulePosition(driveEncoder.getPosition() * 1/21.43 * Math.PI * Constants.Swerve.wheelDiameter, new Rotation2d(angleEncoder.getPosition()));
+    return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
 
   public void stop(){
