@@ -59,7 +59,14 @@
       "command": {
         "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup"
+              }
+            }
+          ]
         }
       }
     },
@@ -67,9 +74,16 @@
       "name": "ShootEvent",
       "waypointRelativePos": 2.0,
       "command": {
-        "type": "parallel",
+        "type": "sequential",
         "data": {
-          "commands": []
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
         }
       }
     }

@@ -4,7 +4,9 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
+import java.util.HashMap;
+
+import com.pathplanner.lib.auto.*;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -19,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -27,6 +31,7 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
   /* Controllers */
   private final Joystick driver = new Joystick(OperatorConstants.DriverControllerPort);
   private final Joystick operator = new Joystick(OperatorConstants.OperatorControllerPort);
@@ -59,6 +64,7 @@ public class RobotContainer {
   private final Vision limelight = new Vision();
 
 
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
   private SendableChooser<Command> autoChooser;
@@ -76,9 +82,6 @@ public class RobotContainer {
       arm,
       () -> -operator.getRawAxis(OperatorConstants.OperatorArm)
      )); 
-    //Register Named Commands - Temporary
-    //NamedCommands.registerCommand("test", new Lock(s_Swerve));
-    NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -86,6 +89,11 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Select Auto", autoChooser);
+
+    //Register Named Commands
+    NamedCommands.registerCommand("Shoot", Commands.print("PLACEHOLDER"));
+    NamedCommands.registerCommand("Pickup", Commands.print("PLACEHOLDER"));
+    NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
   }
 
   /**
@@ -108,6 +116,8 @@ public class RobotContainer {
         .onTrue(new AutoAlign(s_Swerve, limelight));
 
   }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
