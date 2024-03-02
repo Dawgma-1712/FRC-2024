@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": null,
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartingMiddleShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "MS-L"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sh-M"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Sh-R"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Four Notes",
+  "choreoAuto": false
+}
