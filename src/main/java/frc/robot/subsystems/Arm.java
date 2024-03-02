@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.*;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -25,11 +26,18 @@ public class Arm extends SubsystemBase{
     private double raiseGoalState = 0.0;
     private String currentState = "";
 
+    DigitalInput limitswitch = new DigitalInput(1);
+
     public Arm(){
         raiseMotor2.setInverted(true);
     }
 
     public void periodic(){
+
+        if(limitswitch.get()){
+            stop();
+        }
+
         new Thread(() -> {
             raiseMotor1.set(armRaisePID1.calculate(getRaise1Position(), raiseGoalState));
         }).start();
@@ -60,4 +68,6 @@ public class Arm extends SubsystemBase{
     public void manualArm(double raise) {
         raiseGoalState += raise/5.0;
     }
+
+    //woohoo
 }
