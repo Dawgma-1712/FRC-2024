@@ -1,30 +1,36 @@
 package frc.robot.commands;
 
+import frc.robot.LimelightHelpers;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.BeamBreak;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Supplier;
 
 public class LauncherCMD extends Command{
-    private boolean previous;    
     Launcher launcher;
-    BeamBreak sensor;
+    Arm arm;
 
-    public LauncherCMD(Launcher launcher, BeamBreak sensor){
+    public LauncherCMD(Launcher launcher, Arm arm){
         this.launcher = launcher;
-        this.sensor = sensor;
-        addRequirements(launcher);
+        this.arm = arm;
+        addRequirements(launcher, arm);
     }
 
     @Override
     public void initialize() {
-     
     }
 
 
     @Override
     public void execute(){
-        launcher.outtake();
+        if(LimelightHelpers.getTV("")) {
+        arm.setGoalState((int)(arm.speakerAngle()));
+        }
+        
+        if(Math.abs(arm.getRaise1Position() - arm.speakerAngle()) < 5 && LimelightHelpers.getBotPose3d_TargetSpace("").getX() < 3) {
+            launcher.launch();
+        }
     }
 
     @Override
@@ -34,7 +40,7 @@ public class LauncherCMD extends Command{
 
     @Override
     public boolean isFinished(){
-        return !sensor.beamBreak();
+        return false;
     }
 
 

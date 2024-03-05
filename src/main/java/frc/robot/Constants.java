@@ -201,5 +201,7 @@ public final class Constants {
     public static final double[] aprilTagYaw = {120, 120, 180, 180, 270, 270, 0, 0, 60, 60, 300, 60, 180, 0, 120, 240};
 
     public static final int[] targets = {5};
+
+    public static final double speakerYDiff = 0.9;
   }
 }

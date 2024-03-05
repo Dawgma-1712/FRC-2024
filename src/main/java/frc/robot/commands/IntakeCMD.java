@@ -1,24 +1,24 @@
 package frc.robot.commands;
 
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.BeamBreak;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import java.util.function.Supplier;
 
-public class IntakeCMD extends Command{
-    private boolean previous;    
+public class IntakeCMD extends Command{ 
     Intake intake;
-    BeamBreak sensor;
+    Arm arm;
 
-    public IntakeCMD(Intake intake, BeamBreak sensor){
+    public IntakeCMD(Intake intake, Arm arm){
         this.intake = intake;
-        this.sensor = sensor;
-        addRequirements(intake);
+        this.arm = arm;
+        addRequirements(intake, arm);
     }
 
     @Override
     public void initialize() {
-     
+     arm.setGoalState(0);
     }
 
 
@@ -34,7 +34,7 @@ public class IntakeCMD extends Command{
 
     @Override
     public boolean isFinished(){
-        return sensor.beamBreak();
+        return false;
     }
 
 
