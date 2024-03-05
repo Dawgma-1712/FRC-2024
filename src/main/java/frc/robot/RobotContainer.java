@@ -49,15 +49,22 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    // s_Swerve.setDefaultCommand(
+    //     new TeleopSwerve(
+    //         s_Swerve,
+    //         () -> -driver.getRawAxis(translationAxis),
+    //         () -> driver.getRawAxis(strafeAxis),
+    //         () -> -driver.getRawAxis(rotationAxis),
+    //         () -> robotCentric.getAsBoolean()));
+    
     s_Swerve.setDefaultCommand(
-        new TeleopSwerve(
+        new NaiveAutoAlignCMD(
             s_Swerve,
             () -> -driver.getRawAxis(translationAxis),
             () -> driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
-            () -> robotCentric.getAsBoolean()));
+            () -> robotCentric.getAsBoolean(),
+            new int[]{5}));
     
-
     //Register Named Commands - Temporary
     //NamedCommands.registerCommand("test", new Lock(s_Swerve));
     NamedCommands.registerCommand("Lock", new Lock(s_Swerve));

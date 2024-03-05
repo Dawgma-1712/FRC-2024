@@ -82,8 +82,10 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.s_Swerve.resetEncoders();
-    m_robotContainer.s_Swerve.resetOdometry(new Pose2d(0,0, Rotation2d.fromDegrees(0)));
-
+    m_robotContainer.s_Swerve.resetOdometryToLimelight();
+    //REMEMBER THIS EXITS
+    //fuyagfy8sb8gb
+    //fyusgs
   }
 
   /** This function is called periodically during operator control. */
