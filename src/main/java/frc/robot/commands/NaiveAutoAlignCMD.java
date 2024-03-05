@@ -65,8 +65,8 @@ public class NaiveAutoAlignCMD extends Command{
         LimelightHelpers.LimelightTarget_Fiducial[] llArr = llresults.targetingResults.targets_Fiducials;
 
         for(LimelightHelpers.LimelightTarget_Fiducial f :llArr){
-            if(Arrays.asList(this.targetIds).contains(f.fiducialID)){
-                System.out.println(f.tx);
+            // (Arrays.asList(this.targetIds).contains(f.fiducialID)
+            if(true){
                 this.targetAngle=s_Swerve.getYaw().getDegrees() + f.tx;
                 return;
             }
