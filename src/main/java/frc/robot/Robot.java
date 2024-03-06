@@ -82,7 +82,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.s_Swerve.resetEncoders();
-    m_robotContainer.s_Swerve.resetOdometryToLimelight();
     //REMEMBER THIS EXITS
     //fuyagfy8sb8gb
     //fyusgs

@@ -40,14 +40,10 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton lock = new JoystickButton(driver, 3);
   private final JoystickButton slow = new JoystickButton(driver, 1);
-  private final JoystickButton intakeButton = new JoystickButton(driver, 5);
-  private final JoystickButton launch = new JoystickButton(driver, 2);
+  private final JoystickButton resetToLimelight = new JoystickButton(driver, 2);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
-  public final Intake intake = new Intake();
-  public final Arm arm = new Arm();
-  public final Launcher launcher = new Launcher();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -93,9 +89,8 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     lock.onTrue(new Lock(s_Swerve));
     slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
-    intakeButton.toggleOnTrue(new IntakeCMD(intake, arm));
-    launch.toggleOnTrue(new LauncherCMD(launcher, arm));
-
+    resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
+    
   }
 
   /**

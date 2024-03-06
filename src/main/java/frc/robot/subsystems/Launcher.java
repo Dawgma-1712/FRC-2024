@@ -11,15 +11,17 @@ public class Launcher extends SubsystemBase{
     private final CANSparkMax left = new CANSparkMax(17, MotorType.kBrushless);
     private final CANSparkMax right = new CANSparkMax(18, MotorType.kBrushless);
     private final CANSparkMax feed = new CANSparkMax(16, MotorType.kBrushless);
+    public static boolean isSpinning = false;
+    public static boolean checkDirection = true;
 
     public Launcher(){
         
     }
 
-    public void launch(){
-        left.set(-0.5);
-        right.set(0.5);
-        feed.set(0.5);
+    public void outtake(){
+        left.set(-0.1);
+        right.set(0.1);
+        feed.set(0.1);
         LED.setState(0, true);
     }
 

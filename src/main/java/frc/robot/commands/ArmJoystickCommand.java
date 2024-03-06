@@ -1,10 +1,10 @@
 package frc.robot.commands;
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
-public class ArmJoystickCommand extends Command{
+public class ArmJoystickCommand extends CommandBase{
     private Arm arm;
     private Supplier<Double> raiseValue;
 
@@ -14,9 +14,7 @@ public class ArmJoystickCommand extends Command{
         addRequirements(arm);
     }
 
-    public void initialize() {
-        arm.setGoalState(90);
-    }
+    public void initialize() {}
 
     @Override
     public void execute() {

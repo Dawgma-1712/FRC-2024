@@ -16,6 +16,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.commands.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class NaiveAutoAlignCMD extends Command{
     private Swerve s_Swerve;
@@ -65,9 +66,15 @@ public class NaiveAutoAlignCMD extends Command{
         LimelightHelpers.LimelightTarget_Fiducial[] llArr = llresults.targetingResults.targets_Fiducials;
 
         for(LimelightHelpers.LimelightTarget_Fiducial f :llArr){
-            if(Arrays.asList(this.targetIds).contains(f.fiducialID)){
-                System.out.println(f.tx);
+            boolean contained = false;
+            for(int i: this.targetIds){
+                if(i==f.fiducialID) contained = true;
+            }
+            if(contained){
                 this.targetAngle=s_Swerve.getYaw().getDegrees() + f.tx;
+                // System.out.print(f.tx);
+                // System.out.print(" ");
+                // System.out.print(this.targetAngle);
                 return;
             }
         }
@@ -77,6 +84,7 @@ public class NaiveAutoAlignCMD extends Command{
     public void execute() {
         getTargetAngle();
         // System.out.println(this.targetAngle);
+        SmartDashboard.putNumber("targetAngle", this.targetAngle);
         /* Get Values, Deadband*/
         double translationVal =
             translationLimiter.calculate(

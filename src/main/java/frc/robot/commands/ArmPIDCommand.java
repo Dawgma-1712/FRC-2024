@@ -1,15 +1,17 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.BeamBreak;
 
-public class ArmPIDCommand extends Command{
+public class ArmPIDCommand extends CommandBase{
+    
     private final Arm arm;
+    private final String stage;
 
-    public ArmPIDCommand(Arm arm){
+    public ArmPIDCommand(Arm arm, String stage){
         this.arm = arm;
+        this.stage = stage;
         addRequirements(arm);
     }
 
@@ -24,6 +26,7 @@ public class ArmPIDCommand extends Command{
         arm.setIdle();
     }
     public boolean isFinished(){
-        return false;
+        return Math.abs(OperatorConstants.armRaisePresets.get(stage) - arm.getRaise1Position()) < 1 && 
+                Math.abs(OperatorConstants.armRaisePresets.get(stage) - arm.getRaise2Position()) < 1;
     }
 }

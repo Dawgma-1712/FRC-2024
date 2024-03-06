@@ -4,8 +4,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-import frc.robot.LimelightHelpers;
 import frc.robot.Constants.*;
 
 import com.revrobotics.RelativeEncoder;
@@ -25,6 +23,7 @@ public class Arm extends SubsystemBase{
     private final PIDController armRaisePID2 = new PIDController(0.0, 0.0, 0.0);
 
     private double raiseGoalState = 0.0;
+    private String currentState = "";
 
     public Arm(){
         raiseMotor2.setInverted(true);
@@ -39,10 +38,6 @@ public class Arm extends SubsystemBase{
         }).start();
         SmartDashboard.putNumber("Raise Goal Position", raiseGoalState);
         SmartDashboard.putNumber("Raise Position", getRaise1Position());
-    }
-
-    public void setGoalState(int goal) {
-        raiseGoalState = goal;
     }
 
     public double getRaise1Position(){
@@ -64,9 +59,5 @@ public class Arm extends SubsystemBase{
 
     public void manualArm(double raise) {
         raiseGoalState += raise/5.0;
-    }
-
-    public double speakerAngle() {
-        return Math.atan(Constants.OperatorConstants.speakerYDiff / LimelightHelpers.getBotPose3d_TargetSpace("").getX());
     }
 }
