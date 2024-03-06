@@ -1,22 +1,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Arm;
 
 public class ArmPIDCommand extends CommandBase{
     
     private final Arm arm;
-    private final String stage;
 
-    public ArmPIDCommand(Arm arm, String stage){
+    public ArmPIDCommand(Arm arm){
         this.arm = arm;
-        this.stage = stage;
         addRequirements(arm);
     }
 
     public void initialize(){
+        if(LimelightHelpers.getFiducialID("") == 4 || LimelightHelpers.getFiducialID("") == 7) {
+            if(LimelightHelpers.getBotPose3d_TargetSpace("").getX() < Constants.OperatorConstants.launchMidpoint) {
+                arm.setGoalState(Constants.OperatorConstants.launchPos1);
+            }
 
+            else {
+                arm.setGoalState(Constants.OperatorConstants.launchPos2);
+            }
+        }
+
+        else {
+            arm.setGoalState(Constants.OperatorConstants.ampPos);
+        }
     }
 
     public void execute(){
@@ -26,7 +38,6 @@ public class ArmPIDCommand extends CommandBase{
         arm.setIdle();
     }
     public boolean isFinished(){
-        return Math.abs(OperatorConstants.armRaisePresets.get(stage) - arm.getRaise1Position()) < 1 && 
-                Math.abs(OperatorConstants.armRaisePresets.get(stage) - arm.getRaise2Position()) < 1;
+        return false;
     }
 }

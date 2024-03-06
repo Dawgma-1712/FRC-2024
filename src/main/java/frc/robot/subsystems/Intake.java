@@ -11,22 +11,24 @@ public class Intake extends SubsystemBase{
     private final CANSparkMax left = new CANSparkMax(17, MotorType.kBrushless);
     private final CANSparkMax right = new CANSparkMax(18, MotorType.kBrushless);
     private final CANSparkMax feed = new CANSparkMax(16, MotorType.kBrushless);
-    public static boolean isSpinning = false;
-    public static boolean checkDirection = true;
 
     public Intake(){
     }
 
-    public void intake() {
-        left.set(0.1);
-        right.set(-0.1);
+    public void setSpeed(double speed) {
+        left.set(-speed);
+        right.set(speed);
+        feed.set(speed);
+    }
+
+    public void intake(){
+        setSpeed(0.1);
         feed.set(0.1);
-        LED.setState(2, true);
+        LED.setState(0, true);
     }
 
     public void stop(){
-        left.set(0);
-        right.set(0);
+        setSpeed(0);
         feed.set(0);
         LED.setState(0, false);
         LED.setState(2, false);

@@ -18,16 +18,20 @@ public class Launcher extends SubsystemBase{
         
     }
 
+    public void setSpeed(double speed) {
+        left.set(-speed);
+        right.set(speed);
+    }
+
     public void outtake(){
-        left.set(-0.1);
-        right.set(0.1);
+        setSpeed(0.1);
         feed.set(0.1);
         LED.setState(0, true);
     }
 
     public void stop(){
-        left.set(0);
-        right.set(0);
+        setSpeed(0);
+        feed.set(0);
         LED.setState(0, false);
         LED.setState(2, false);
     }

@@ -27,6 +27,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Controllers */
   private final Joystick driver = new Joystick(0);
+  private final Joystick operator = new Joystick(1);
 
   /* Drive Controls */
   private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -41,9 +42,16 @@ public class RobotContainer {
   private final JoystickButton lock = new JoystickButton(driver, 3);
   private final JoystickButton slow = new JoystickButton(driver, 1);
   private final JoystickButton resetToLimelight = new JoystickButton(driver, 2);
+  private final JoystickButton climb = new JoystickButton(driver, 4);
+  private final JoystickButton pickup = new JoystickButton(driver, 5);
+  private final JoystickButton launch = new JoystickButton(driver, 6);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
+  public final Arm arm = new Arm();
+  public final Extender climber = new Extender();
+  public final Intake intake = new Intake();
+  public final Launcher launcher = new Launcher();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -65,6 +73,27 @@ public class RobotContainer {
             () -> driver.getRawAxis(strafeAxis),
             () -> robotCentric.getAsBoolean(),
             new int[]{5}));
+
+    arm.setDefaultCommand(
+      new ArmJoystickCommand(
+        arm,
+        () -> operator.getRawAxis(0)
+      )
+    );
+
+    launcher.setDefaultCommand(
+      new LauncherTriggerCMD(
+        launcher,
+      () -> operator.getRawAxis(3)
+      )
+    );
+
+    intake.setDefaultCommand(
+      new IntakeTriggerCMD(
+        intake,
+        () -> operator.getRawAxis(1)
+      )
+    );
     
     //Register Named Commands - Temporary
     //NamedCommands.registerCommand("test", new Lock(s_Swerve));
@@ -90,7 +119,9 @@ public class RobotContainer {
     lock.onTrue(new Lock(s_Swerve));
     slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
     resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
-    
+    climb.onTrue(new Climber(arm, climber));
+    pickup.toggleOnTrue(new IntakeCMD(intake, arm));
+    launch.toggleOnTrue(new LauncherCMD(launcher, arm));
   }
 
   /**

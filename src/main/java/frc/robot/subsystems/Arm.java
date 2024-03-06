@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.*;
 
 import com.revrobotics.RelativeEncoder;
@@ -23,7 +24,6 @@ public class Arm extends SubsystemBase{
     private final PIDController armRaisePID2 = new PIDController(0.0, 0.0, 0.0);
 
     private double raiseGoalState = 0.0;
-    private String currentState = "";
 
     public Arm(){
         raiseMotor2.setInverted(true);
@@ -55,6 +55,10 @@ public class Arm extends SubsystemBase{
         System.out.println("Set idle");
         raiseMotor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
         raiseMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
+
+    public void setGoalState(double raiseGoalState) {
+        this.raiseGoalState = Constants.OperatorConstants.degreesToArmRot * raiseGoalState;
     }
 
     public void manualArm(double raise) {

@@ -201,5 +201,16 @@ public final class Constants {
     public static final double[] aprilTagYaw = {120, 120, 180, 180, 270, 270, 0, 0, 60, 60, 300, 60, 180, 0, 120, 240};
 
     public static final int[] targets = {5};
+
+    public static final double degreesToArmRot = 375/360;
+
+    public static final double launchPos1 = degreesToArmRot * 45;
+    public static final double launchPos2 = degreesToArmRot * 5;
+    public static final double ampPos = degreesToArmRot * -5;
+    public static final double intakePos = degreesToArmRot * 90;
+
+    public static final double launchDistance1 = 3;
+    public static final double launchDistance2 = 1;
+    public static final double launchMidpoint = (launchDistance1 + launchDistance2) / 2;
   }
 }
