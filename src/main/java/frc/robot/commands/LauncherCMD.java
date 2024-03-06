@@ -24,12 +24,22 @@ public class LauncherCMD extends Command{
 
     @Override
     public void execute(){
-        launcher.outtake();
+        if(!launcher.getLaunching()){
+            launcher.outtake();
+        }
+
+        else {
+            launcher.stop();
+        }
+        
     }
 
     @Override
     public void end(boolean interrupted){
-        launcher.stop();
+        if(!launcher.getLaunching()) {
+            launcher.stop();
+        }
+        launcher.toggleLaunching();
     }
 
     @Override
