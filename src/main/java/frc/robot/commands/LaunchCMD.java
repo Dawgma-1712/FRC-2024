@@ -23,6 +23,7 @@ public class LaunchCMD extends SequentialCommandGroup{
         this.intake = intake;
         addRequirements(launcher, arm, feed, intake);
         addCommands(
+            
             new SetLauncherSpeedCMD(launcher, Constants.EndEffectorConstants.launchSpeed),
             new InstantCommand(() -> intake.setSpeed(Constants.EndEffectorConstants.intakeSpeed)),
             new InstantCommand(() -> feed.setSpeed(Constants.EndEffectorConstants.feedSpeed)),

@@ -17,19 +17,11 @@ public class Arm extends SubsystemBase{
     private final RelativeEncoder raiseEncoder1 = raiseMotor1.getEncoder();
     private final RelativeEncoder raiseEncoder2 = raiseMotor2.getEncoder();
 
-    private final PIDController armRaisePID1 = new PIDController(0.25, 0.0, 0.0);
-    private final PIDController armRaisePID2 = new PIDController(0.25, 0.0, 0.0);
-
-    private double raiseGoalState = 0.0;
-
     public Arm(){
         raiseMotor2.setInverted(true);
     }
 
     public void periodic(){
-        raiseMotor1.set(armRaisePID1.calculate(getRaise1Position(), raiseGoalState));
-        raiseMotor2.set(armRaisePID2.calculate(getRaise2Position(), raiseGoalState));
-        SmartDashboard.putNumber("Raise Goal Position", raiseGoalState);
         SmartDashboard.putNumber("Raise Position", getRaise1Position());
     }
 
@@ -52,11 +44,8 @@ public class Arm extends SubsystemBase{
         raiseMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
-    public void setGoalState(double raiseGoalState) {
-        this.raiseGoalState = Constants.OperatorConstants.degreesToArmRot * raiseGoalState;
-    }
-
-    public void manualArm(double raise) {
-        raiseGoalState += raise/5.0;
+    public void setSpeed(double speed) {
+        raiseMotor1.set(speed);
+        raiseMotor2.set(speed);
     }
 }

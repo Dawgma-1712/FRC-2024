@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
@@ -9,6 +10,7 @@ import frc.robot.subsystems.Arm;
 public class ArmLimeLightCommand extends Command{
     
     private final Arm arm;
+    private final PIDController armRaisePID = new PIDController(0.0, 0.0, 0.0);
 
     public ArmLimeLightCommand(Arm arm){
         this.arm = arm;
@@ -18,16 +20,16 @@ public class ArmLimeLightCommand extends Command{
     public void initialize(){
         if(LimelightHelpers.getFiducialID("") == 4 || LimelightHelpers.getFiducialID("") == 7) {
             if(LimelightHelpers.getBotPose3d_TargetSpace("").getX() < Constants.OperatorConstants.launchMidpoint) {
-                arm.setGoalState(Constants.OperatorConstants.launchPos1);
+                arm.setSpeed(armRaisePID.calculate(arm.getRaise1Position(), Constants.OperatorConstants.launchPos1));
             }
 
             else {
-                arm.setGoalState(Constants.OperatorConstants.launchPos2);
+                arm.setSpeed(armRaisePID.calculate(arm.getRaise1Position(), Constants.OperatorConstants.launchPos2));
             }
         }
 
         else {
-            arm.setGoalState(Constants.OperatorConstants.ampPos);
+            arm.setSpeed(armRaisePID.calculate(arm.getRaise1Position(), Constants.OperatorConstants.ampPos));
         }
     }
 
@@ -37,6 +39,7 @@ public class ArmLimeLightCommand extends Command{
     public void end(boolean interrupted){
         arm.setIdle();
     }
+    
     public boolean isFinished(){
         return false;
     }

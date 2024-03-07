@@ -19,7 +19,7 @@ public class ArmJoystickCommand extends Command{
     @Override
     public void execute() {
         double raise = Math.abs(raiseValue.get()) > 0.04 ? raiseValue.get() : 0;
-        arm.manualArm(raise);
+        arm.setSpeed(raise);
     }
 
     @Override
