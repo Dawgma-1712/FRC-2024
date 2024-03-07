@@ -1,10 +1,10 @@
 package frc.robot.commands;
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class IntakeTriggerCMD extends CommandBase{
+public class IntakeTriggerCMD extends Command{
     private Intake intake;
     private Supplier<Double> speed;
 
@@ -18,7 +18,7 @@ public class IntakeTriggerCMD extends CommandBase{
 
     @Override
     public void execute() {
-        intake.setSpeed(speed.get() / 2);
+        intake.setSpeed(speed.get());
     }
 
     @Override

@@ -96,7 +96,7 @@ public final class Constants {
       public static final int driveMotorID = 8;//4;
       public static final int angleMotorID = 7;//3;
       public static final int canCoderID = 9;//1;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(2.98);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -106,7 +106,7 @@ public final class Constants {
       public static final int driveMotorID = 5;//14;
       public static final int angleMotorID = 4;//13;
       public static final int canCoderID = 6;//2;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-10);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -116,7 +116,7 @@ public final class Constants {
       public static final int driveMotorID = 11;//2;8
       public static final int angleMotorID = 10;//1;7
       public static final int canCoderID = 12;//3;9
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(300.58);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -126,7 +126,7 @@ public final class Constants {
       public static final int driveMotorID =2;//15;
       public static final int angleMotorID = 1;//16;
       public static final int canCoderID = 3;//4;
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(134.91);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
     }
@@ -149,7 +149,16 @@ public final class Constants {
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-   public static final class OperatorConstants{
+  public static final class EndEffectorConstants {
+    public static final double launchSpeed = 0.8;
+    public static final double launchTime = 5;
+    public static final double launcherThreshold = 0.8;
+    public static final double intakeSpeed = 0.8;
+    public static final double feedSpeed = 0.8;
+    
+  }
+
+  public static final class OperatorConstants{
     public static final Map<String, Double> armExtendPresets = Map.ofEntries(
       Map.entry("coneMid", 37.0),
       Map.entry("coneHigh", 200.0),

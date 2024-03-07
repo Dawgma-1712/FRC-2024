@@ -4,18 +4,22 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.*;
+
 import frc.robot.commands.*;
 
-public class Intake extends SubsystemBase{
-    private final CANSparkMax intakeMotor = new CANSparkMax(15, MotorType.kBrushless);
+public class Feed extends SubsystemBase{
+    private final CANSparkMax feedMotor = new CANSparkMax(16, MotorType.kBrushless);
 
-    public Intake(){
+    public Feed(){
     }
 
     public void setSpeed(double speed) {
-        if(speed != 0) LED.setState(0, true);
-        intakeMotor.set(speed);
+        feedMotor.set(speed);
+    }
+
+    public void feed(){
+        setSpeed(0.1);
+        LED.setState(0, true);
     }
 
     public void stop(){
@@ -26,7 +30,7 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Intake Launcher Speed", intakeMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Feed Motor Speed", feedMotor.getEncoder().getVelocity());
     }
 
 }

@@ -52,27 +52,28 @@ public class RobotContainer {
   public final Extender climber = new Extender();
   public final Intake intake = new Intake();
   public final Launcher launcher = new Launcher();
+  public final Feed feed = new Feed();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
   private SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
-    // s_Swerve.setDefaultCommand(
-    //     new TeleopSwerve(
-    //         s_Swerve,
-    //         () -> -driver.getRawAxis(translationAxis),
-    //         () -> driver.getRawAxis(strafeAxis),
-    //         () -> -driver.getRawAxis(rotationAxis),
-    //         () -> robotCentric.getAsBoolean()));
-    
     s_Swerve.setDefaultCommand(
-        new NaiveAutoAlignCMD(
+        new TeleopSwerve(
             s_Swerve,
             () -> -driver.getRawAxis(translationAxis),
             () -> driver.getRawAxis(strafeAxis),
-            () -> robotCentric.getAsBoolean(),
-            new int[]{5}));
+            () -> -driver.getRawAxis(rotationAxis),
+            () -> robotCentric.getAsBoolean()));
+    
+    // s_Swerve.setDefaultCommand(
+    //     new NaiveAutoAlignCMD(
+    //         s_Swerve,
+    //         () -> -driver.getRawAxis(translationAxis),
+    //         () -> driver.getRawAxis(strafeAxis),
+    //         () -> robotCentric.getAsBoolean(),
+    //         new int[]{5}));
 
     arm.setDefaultCommand(
       new ArmJoystickCommand(
@@ -121,7 +122,7 @@ public class RobotContainer {
     resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
     climb.onTrue(new Climber(arm, climber));
     pickup.toggleOnTrue(new IntakeCMD(intake, arm));
-    launch.toggleOnTrue(new LauncherCMD(launcher, arm));
+    launch.toggleOnTrue(new LaunchCMD(launcher, feed, intake, arm));
   }
 
   /**

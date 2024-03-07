@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Arm;
 
-public class ArmPIDCommand extends CommandBase{
+public class ArmLimeLightCommand extends Command{
     
     private final Arm arm;
 
-    public ArmPIDCommand(Arm arm){
+    public ArmLimeLightCommand(Arm arm){
         this.arm = arm;
         addRequirements(arm);
     }

@@ -8,38 +8,38 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 
 public class Launcher extends SubsystemBase{
-    private final CANSparkMax left = new CANSparkMax(17, MotorType.kBrushless);
-    private final CANSparkMax right = new CANSparkMax(18, MotorType.kBrushless);
-    private final CANSparkMax feed = new CANSparkMax(16, MotorType.kBrushless);
+    private final CANSparkMax leftMotor = new CANSparkMax(17, MotorType.kBrushless);
+    private final CANSparkMax rightMotor = new CANSparkMax(18, MotorType.kBrushless);
     public static boolean isSpinning = false;
     public static boolean checkDirection = true;
 
     public Launcher(){
-        
     }
 
     public void setSpeed(double speed) {
-        left.set(-speed);
-        right.set(speed);
-    }
-
-    public void outtake(){
-        setSpeed(0.1);
-        feed.set(0.1);
-        LED.setState(0, true);
+        leftMotor.set(speed);
+        rightMotor.set(-speed);
     }
 
     public void stop(){
         setSpeed(0);
-        feed.set(0);
+        // feed.set(0);
         LED.setState(0, false);
         LED.setState(2, false);
     }
 
+    public double getRightVelocity(){
+        return rightMotor.getEncoder().getVelocity();
+    }
+
+    public double getLeftVelocity(){
+        return leftMotor.getEncoder().getVelocity();
+    }
+
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("Left Launcher Speed", left.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Right Launcher Speed", right.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Left Launcher Speed", leftMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Right Launcher Speed", rightMotor.getEncoder().getVelocity());
     }
 
 }

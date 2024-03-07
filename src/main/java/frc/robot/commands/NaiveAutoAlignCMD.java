@@ -72,9 +72,6 @@ public class NaiveAutoAlignCMD extends Command{
             }
             if(contained){
                 this.targetAngle=s_Swerve.getYaw().getDegrees() + f.tx;
-                // System.out.print(f.tx);
-                // System.out.print(" ");
-                // System.out.print(this.targetAngle);
                 return;
             }
         }
@@ -84,7 +81,11 @@ public class NaiveAutoAlignCMD extends Command{
     public void execute() {
         getTargetAngle();
         // System.out.println(this.targetAngle);
+        SmartDashboard.putNumber("currentAngle", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("targetAngle", this.targetAngle);
+        SmartDashboard.putNumber("optimizedAngle", optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees()));
+         SmartDashboard.putNumber("rawPID", rotationPID.calculate(optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees())));
+        
         /* Get Values, Deadband*/
         double translationVal =
             translationLimiter.calculate(
@@ -93,10 +94,8 @@ public class NaiveAutoAlignCMD extends Command{
             strafeLimiter.calculate(
                 MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.Swerve.stickDeadband));
         
-        double rotationVal =
-            rotationLimiter.calculate(
-                MathUtil.applyDeadband(rotationPID.calculate(optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees())), Constants.Swerve.stickDeadband));
-
+        double rotationVal = rotationPID.calculate(optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees()));
+        SmartDashboard.putNumber("rotationVal", rotationVal);
         /* Drive */
         s_Swerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),

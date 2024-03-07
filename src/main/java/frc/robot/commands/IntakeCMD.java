@@ -22,10 +22,9 @@ public class IntakeCMD extends Command{
      arm.setGoalState(Constants.OperatorConstants.intakePos);
     }
 
-
     @Override
     public void execute(){
-        intake.intake();
+        intake.setSpeed(0.1);
     }
 
     @Override
@@ -40,5 +39,3 @@ public class IntakeCMD extends Command{
 
 
 }
-
-    
