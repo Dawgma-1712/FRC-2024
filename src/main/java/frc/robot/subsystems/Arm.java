@@ -47,7 +47,7 @@ public class Arm extends SubsystemBase{
     }
 
     public double getPosition(){
-        return (getRaise1Position()+getRaise2Position())/2;
+        return (getRaise1Position() + getRaise2Position())/2;
     }
 
     public void stop(){
@@ -63,7 +63,7 @@ public class Arm extends SubsystemBase{
 
     public void setTargetPosition(double raiseGoalState) {
         positionControl = true;
-        this.raiseGoalState = Constants.OperatorConstants.degreesToArmRot * raiseGoalState;
+        this.raiseGoalState = raiseGoalState;
     }
 
      public void setSpeed(double speed) {

@@ -22,6 +22,7 @@ public class ShootCMD extends SequentialCommandGroup{
         this.feed = feed;
         this.intake = intake;
         addRequirements(launcher, arm, feed, intake);
+        
         //decent chance that the speeds will go back to defualt too fast
         addCommands(
             new SetLauncherSpeedCMD(launcher, Constants.EndEffectorConstants.launchSpeed),

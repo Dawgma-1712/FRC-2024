@@ -46,6 +46,11 @@ public final class Constants {
     public static final int angleContinuousCurrentLimit = 20;
     public static final int driveContinuousCurrentLimit = 80;
 
+    /* Slew Rate Limiter for Tele-Op Swerve */
+    public static final double translationSlewRate = 3;
+    public static final double strafeSlewRate = 3;
+    public static final double rotationSlewRate = 3;
+
     /* Angle Motor PID Values */
     public static final double angleKFF = 0.0;
 
@@ -143,6 +148,10 @@ public final class Constants {
     public static final double kPXController = 1;
     public static final double kPYController = 0;
     public static final double kPThetaController = 1;
+
+    public static final double translationSlewRateAA = 3;
+    public static final double strafeSlewRateAA = 3;
+    public static final double rotationSlewRateAA = 3;
 
     // Constraint for the motion profilied robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

@@ -19,7 +19,7 @@ public class SetLauncherSpeedCMD extends Command{
 
     @Override
     public void execute() {
-        launcher.setSpeed(this.speed);
+        launcher.setSpeed(speed);
     }
 
     @Override
@@ -28,8 +28,8 @@ public class SetLauncherSpeedCMD extends Command{
 
     @Override
     public boolean isFinished() {
-        boolean leftSideUpToSpeed = Math.abs(launcher.getLeftVelocity()-this.speed) < Constants.EndEffectorConstants.launcherThreshold;
-        boolean rightSideUpToSpeed = Math.abs(launcher.getRightVelocity()-this.speed) <  Constants.EndEffectorConstants.launcherThreshold;
+        boolean leftSideUpToSpeed = Math.abs(launcher.getLeftVelocity() - speed) < Constants.EndEffectorConstants.launcherThreshold;
+        boolean rightSideUpToSpeed = Math.abs(launcher.getRightVelocity() - speed) <  Constants.EndEffectorConstants.launcherThreshold;
         return leftSideUpToSpeed && rightSideUpToSpeed;
     }
 }

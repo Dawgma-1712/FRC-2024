@@ -20,13 +20,12 @@ public class ArmJoystickCommand extends Command{
     @Override
     public void execute() {
         if(raiseValue.get() > Constants.OperatorConstants.ArmDeadband) return;
-        double raise = Math.abs(raiseValue.get()) > 0.04 ? raiseValue.get() : 0;
+        double raise = Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband ? raiseValue.get() : 0;
         arm.setSpeed(raise);
     }
 
     @Override
     public void end(boolean interrupted) {
-
     }
 
     @Override
