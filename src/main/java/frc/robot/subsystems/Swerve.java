@@ -64,10 +64,10 @@ public class Swerve extends SubsystemBase {
       //   };
     mSwerveMods =
         new SwerveModule[] {
-          new SwerveModule(0, Constants.Swerve.Mod0.constants, 0.03, 0.0, 0.15),
-          new SwerveModule(1, Constants.Swerve.Mod1.constants, 0.022, 0.0, 0.11),
-          new SwerveModule(2, Constants.Swerve.Mod2.constants, 0.026, 0.0, 0.12),
-          new SwerveModule(3, Constants.Swerve.Mod3.constants, 0.023, 0.0, 0.11)
+          new SwerveModule(0, Constants.Swerve.Mod0.constants, Constants.Swerve.Mod0.anglePID[0], Constants.Swerve.Mod0.anglePID[1], Constants.Swerve.Mod0.anglePID[2]),
+          new SwerveModule(1, Constants.Swerve.Mod1.constants, Constants.Swerve.Mod1.anglePID[0], Constants.Swerve.Mod1.anglePID[1], Constants.Swerve.Mod1.anglePID[2]),
+          new SwerveModule(2, Constants.Swerve.Mod2.constants, Constants.Swerve.Mod2.anglePID[0], Constants.Swerve.Mod2.anglePID[1], Constants.Swerve.Mod2.anglePID[2]),
+          new SwerveModule(3, Constants.Swerve.Mod3.constants, Constants.Swerve.Mod3.anglePID[0], Constants.Swerve.Mod3.anglePID[1], Constants.Swerve.Mod3.anglePID[2])
         };
     positions[0] = mSwerveMods[0].getPosition();
     positions[1] = mSwerveMods[1].getPosition();
