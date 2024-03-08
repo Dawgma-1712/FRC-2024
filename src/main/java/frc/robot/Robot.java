@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_robotContainer.s_Swerve.resetEncoders();
   }
 
   /**
@@ -65,7 +66,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    m_robotContainer.s_Swerve.resetEncoders();
   }
 
   /** This function is called periodically during autonomous. */
@@ -81,10 +81,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.s_Swerve.resetEncoders();
-    //REMEMBER THIS EXITS
-    //fuyagfy8sb8gb
-    //fyusgs
   }
 
   /** This function is called periodically during operator control. */

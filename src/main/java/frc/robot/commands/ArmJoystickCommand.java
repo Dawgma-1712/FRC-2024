@@ -2,6 +2,7 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class ArmJoystickCommand extends Command{
@@ -18,6 +19,7 @@ public class ArmJoystickCommand extends Command{
 
     @Override
     public void execute() {
+        if(raiseValue.get() > Constants.OperatorConstants.ArmDeadband) return;
         double raise = Math.abs(raiseValue.get()) > 0.04 ? raiseValue.get() : 0;
         arm.setSpeed(raise);
     }

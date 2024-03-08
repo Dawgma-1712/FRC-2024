@@ -4,7 +4,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
 public class Intake extends SubsystemBase{
@@ -22,6 +21,10 @@ public class Intake extends SubsystemBase{
         setSpeed(0);
         LED.setState(0, false);
         LED.setState(2, false);
+    }
+
+    public double getVelocity() {
+        return intakeMotor.getEncoder().getVelocity();
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -155,7 +156,14 @@ public final class Constants {
     public static final double launcherThreshold = 0.8;
     public static final double intakeSpeed = 0.8;
     public static final double feedSpeed = 0.8;
-    
+
+    public static final double armRaiseKP = 0.25;
+    public static final double armRaiseKI = 0.25;
+    public static final double armRaiseKD = 0.25;
+
+//NEED TO CHANGE
+    public static final double armClimbPosition = -5;
+    public static final double armThreshold = 0.05;
   }
 
   public static final class OperatorConstants{
@@ -213,13 +221,18 @@ public final class Constants {
 
     public static final double degreesToArmRot = 375/360;
 
-    public static final double launchPos1 = degreesToArmRot * 45;
-    public static final double launchPos2 = degreesToArmRot * 5;
-    public static final double ampPos = degreesToArmRot * -5;
+    public static final double nearLaunchPosition = degreesToArmRot * 45;
+    public static final double farLaunchPosition = degreesToArmRot * 5;
+    public static final double ampLaunchPosition = degreesToArmRot * -5;
     public static final double intakePos = degreesToArmRot * 90;
 
     public static final double launchDistance1 = 3;
     public static final double launchDistance2 = 1;
     public static final double launchMidpoint = (launchDistance1 + launchDistance2) / 2;
+
+    public static final double setpointRange = 5;
+
+    public static final double LauncherDeadband = 0.1;
+    public static final double ArmDeadband = 0.1;
   }
 }

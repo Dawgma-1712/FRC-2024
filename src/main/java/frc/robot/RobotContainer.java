@@ -45,11 +45,15 @@ public class RobotContainer {
   private final JoystickButton climb = new JoystickButton(driver, 4);
   private final JoystickButton pickup = new JoystickButton(driver, 5);
   private final JoystickButton launch = new JoystickButton(driver, 6);
+  private final JoystickButton preset1 = new JoystickButton(operator, 2);
+  private final JoystickButton preset2 = new JoystickButton(operator, 3);
+  private final JoystickButton preset3 = new JoystickButton(operator, 4);
+  private final JoystickButton subwooferArm = new JoystickButton(driver, 2);
 
   /* Subsystems */
   public final Swerve s_Swerve = new Swerve();
   public final Arm arm = new Arm();
-  public final Extender climber = new Extender();
+  public final Climber climber = new Climber();
   public final Intake intake = new Intake();
   public final Launcher launcher = new Launcher();
   public final Feed feed = new Feed();
@@ -120,9 +124,13 @@ public class RobotContainer {
     lock.onTrue(new Lock(s_Swerve));
     slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
     resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
-    climb.onTrue(new Climber(arm, climber));
+    climb.onTrue(new InstantCommand(() -> climber.toggle()));
     pickup.toggleOnTrue(new IntakeCMD(intake, arm));
-    launch.toggleOnTrue(new LaunchCMD(launcher, feed, intake, arm));
+    launch.toggleOnTrue(new ShootCMD(launcher, feed, intake, arm));
+    preset1.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.intakePos)));
+    preset2.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.nearLaunchPosition)));
+    preset3.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.farLaunchPosition)));
+    subwooferArm.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.ampLaunchPosition)));
   }
 
   /**

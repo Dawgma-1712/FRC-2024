@@ -84,7 +84,7 @@ public class NaiveAutoAlignCMD extends Command{
         SmartDashboard.putNumber("currentAngle", s_Swerve.getYaw().getDegrees());
         SmartDashboard.putNumber("targetAngle", this.targetAngle);
         SmartDashboard.putNumber("optimizedAngle", optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees()));
-         SmartDashboard.putNumber("rawPID", rotationPID.calculate(optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees())));
+        SmartDashboard.putNumber("rawPID", rotationPID.calculate(optimizeAngles(this.targetAngle, s_Swerve.getYaw().getDegrees())));
         
         /* Get Values, Deadband*/
         double translationVal =

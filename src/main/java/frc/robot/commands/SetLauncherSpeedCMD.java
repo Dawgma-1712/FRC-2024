@@ -24,13 +24,12 @@ public class SetLauncherSpeedCMD extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        launcher.stop();
     }
 
     @Override
     public boolean isFinished() {
         boolean leftSideUpToSpeed = Math.abs(launcher.getLeftVelocity()-this.speed) < Constants.EndEffectorConstants.launcherThreshold;
         boolean rightSideUpToSpeed = Math.abs(launcher.getRightVelocity()-this.speed) <  Constants.EndEffectorConstants.launcherThreshold;
-        return leftSideUpToSpeed && leftSideUpToSpeed;
+        return leftSideUpToSpeed && rightSideUpToSpeed;
     }
 }

@@ -3,6 +3,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class LauncherTriggerCMD extends Command{
@@ -19,7 +20,7 @@ public class LauncherTriggerCMD extends Command{
 
     @Override
     public void execute() {
-        launcher.setSpeed(speed.get() / 2);
+        if(speed.get() < Constants.OperatorConstants.LauncherDeadband) launcher.setSpeed(speed.get());
     }
 
     @Override

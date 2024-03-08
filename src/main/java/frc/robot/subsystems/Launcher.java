@@ -23,7 +23,6 @@ public class Launcher extends SubsystemBase{
 
     public void stop(){
         setSpeed(0);
-        // feed.set(0);
         LED.setState(0, false);
         LED.setState(2, false);
     }
