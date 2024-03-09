@@ -21,8 +21,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-import frc.robot.LimelightHelpers;
-import frc.robot.LimelightHelpers.LimelightTarget_Fiducial;
+// import frc.robot.LimelightHelpers;
+// import frc.robot.LimelightHelpers.LimelightTarget_Fiducial;
 import frc.robot.Constants;
 import frc.robot.Debug;
 
@@ -112,7 +112,6 @@ public class Swerve extends SubsystemBase {
         SmartDashboard.putNumber("XSpeed", translation.getX());
         SmartDashboard.putNumber("YSpeed", translation.getY());
     SwerveModuleState[] swerveModuleStates = new SwerveModuleState[4];
-    //Debug.log(5, "Drive locked" + Boolean.toString(locked));
     if(locked){
         swerveModuleStates[0] = new SwerveModuleState(0, new Rotation2d(Math.PI/4.0));
         swerveModuleStates[1] = new SwerveModuleState(0, new Rotation2d(-Math.PI/4.0));
@@ -130,12 +129,14 @@ public class Swerve extends SubsystemBase {
     }
     for (SwerveModule mod : mSwerveMods) {
         mod.setDesiredState(swerveModuleStates[mod.moduleNumber], false/*isOpenLoop */, locked);
+        SmartDashboard.putNumber("mod " +  Integer.toString(mod.moduleNumber) +  " tgt wheel vel", mSwerveMods[2].getTargetVelocity());
     }
+    
   }
 
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+    SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed*this.percentSpeed);
 
     for (SwerveModule mod : mSwerveMods) {
       mod.setDesiredState(desiredStates[mod.moduleNumber], false, locked);
@@ -147,11 +148,11 @@ public class Swerve extends SubsystemBase {
   }
 
   public void resetOdometryToLimelight(){
-    if(LimelightHelpers.getTV("")){
-      resetOdometry(LimelightHelpers.getBotPose2d(""));
-    }else{
-      resetOdometry(new Pose2d());
-    }
+    // if(LimelightHelpers.getTV("")){
+    //   resetOdometry(LimelightHelpers.getBotPose2d(""));
+    // }else{
+    //   resetOdometry(new Pose2d());
+    // }
   }
 
   public void resetOdometry(Pose2d pose) {
@@ -172,6 +173,10 @@ public class Swerve extends SubsystemBase {
     this.locked = locked;
   }
 
+  public void toggleLock(){
+    this.locked = !locked;
+  }
+
   public void stopModules(){
     for(SwerveModule mod : mSwerveMods){
         mod.stop();
@@ -179,8 +184,7 @@ public class Swerve extends SubsystemBase {
   }
 
   public void setSpeed(double speed){
-    Constants.Swerve.maxSpeed = speed;
-    //this.percentSpeed = speed;
+    this.percentSpeed = speed;
   }
 
   public SwerveModuleState[] getStates() {
@@ -210,26 +214,26 @@ public class Swerve extends SubsystemBase {
     positions[3] = mSwerveMods[3].getPosition();
     swervePoseEstimator.updateWithTime(Timer.getFPGATimestamp(), getYaw(), positions);
 
-    if(LimelightHelpers.getTV("") && (LimelightHelpers.getBotPose2d("").getTranslation().getDistance(getPose().getTranslation()) < 1)){
-      // for(LimelightTarget_Fiducial t: LimelightHelpers.getLatestResults("").targetingResults.targets_Fiducials){
-      //   System.out.print(t.tx);
-      //   System.out.print(" ");
-      // }
-      // System.out.println("");
-      double latency = LimelightHelpers.getLatency_Pipeline("") + LimelightHelpers.getLatency_Capture("");
-      double timestamp = Timer.getFPGATimestamp()-latency/1000;
-      // System.out.print(getPose().getX());
-      // System.out.print(" ");
-      // System.out.println(getPose().getY());
-      swervePoseEstimator.addVisionMeasurement(LimelightHelpers.getBotPose2d(""), timestamp);
-      // System.out.print(getPose().getX());
-      // System.out.print(" ");
-      // System.out.println(getPose().getY());
-      // System.out.println("----------");
-    }
+    // if(LimelightHelpers.getTV("") && (LimelightHelpers.getBotPose2d("").getTranslation().getDistance(getPose().getTranslation()) < 1)){
+    //   // for(LimelightTarget_Fiducial t: LimelightHelpers.getLatestResults("").targetingResults.targets_Fiducials){
+    //   //   System.out.print(t.tx);
+    //   //   System.out.print(" ");
+    //   // }
+    //   // System.out.println("");
+    //   double latency = LimelightHelpers.getLatency_Pipeline("") + LimelightHelpers.getLatency_Capture("");
+    //   double timestamp = Timer.getFPGATimestamp()-latency/1000;
+    //   // System.out.print(getPose().getX());
+    //   // System.out.print(" ");
+    //   // System.out.println(getPose().getY());
+    //   swervePoseEstimator.addVisionMeasurement(LimelightHelpers.getBotPose2d(""), timestamp);
+    //   // System.out.print(getPose().getX());
+    //   // System.out.print(" ");
+    //   // System.out.println(getPose().getY());
+    //   // System.out.println("----------");
+    // }
 
     field.setRobotPose(getPose());
-
+    SmartDashboard.putNumber("Gyro", getYaw().getDegrees());
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(
           "Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
@@ -241,9 +245,10 @@ public class Swerve extends SubsystemBase {
     SmartDashboard.putBoolean("Lock?", locked);
     SmartDashboard.putNumber("FieldX", getPose().getX());
     SmartDashboard.putNumber("FieldY", getPose().getY());
-    SmartDashboard.putNumber("LimelightX", LimelightHelpers.getBotPose2d("").getX());
-    SmartDashboard.putNumber("LimelightY", LimelightHelpers.getBotPose2d("").getY());
-    SmartDashboard.putBoolean("TV", LimelightHelpers.getTV(""));
+    // SmartDashboard.putNumber("LimelightX", LimelightHelpers.getBotPose2d("").getX());
+    // SmartDashboard.putNumber("LimelightY", LimelightHelpers.getBotPose2d("").getY());
+    // SmartDashboard.putBoolean("TV", LimelightHelpers.getTV(""));
+    SmartDashboard.putNumber("Encoder Test", mSwerveMods[0].getCanCoder().getDegrees());
   }
 
   //Path Planner - AutoBuilder

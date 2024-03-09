@@ -25,6 +25,15 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  
+  /* Subsystems */
+  public final Swerve s_Swerve = new Swerve();
+  public final Arm arm = new Arm();
+  public final Intake intake = new Intake();
+  public final Launcher launcher = new Launcher();
+  public final Feed feed = new Feed();
+  // public final Climber climber = new Climber();
+
   /* Controllers */
   private final Joystick driver = new Joystick(0);
   private final Joystick operator = new Joystick(1);
@@ -41,22 +50,14 @@ public class RobotContainer {
       new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton lock = new JoystickButton(driver, 3);
   private final JoystickButton slow = new JoystickButton(driver, 1);
-  private final JoystickButton resetToLimelight = new JoystickButton(driver, 2);
-  private final JoystickButton climb = new JoystickButton(driver, 4);
-  private final JoystickButton pickup = new JoystickButton(driver, 5);
-  private final JoystickButton launch = new JoystickButton(driver, 6);
-  private final JoystickButton preset1 = new JoystickButton(operator, 2);
-  private final JoystickButton preset2 = new JoystickButton(operator, 3);
-  private final JoystickButton preset3 = new JoystickButton(operator, 4);
-  private final JoystickButton subwooferArm = new JoystickButton(driver, 2);
-
-  /* Subsystems */
-  public final Swerve s_Swerve = new Swerve();
-  public final Arm arm = new Arm();
-  public final Climber climber = new Climber();
-  public final Intake intake = new Intake();
-  public final Launcher launcher = new Launcher();
-  public final Feed feed = new Feed();
+  // private final JoystickButton resetToLimelight = new JoystickButton(driver, 2);
+  // private final JoystickButton climb = new JoystickButton(driver, 4);
+  // private final JoystickButton pickup = new JoystickButton(driver, 5);
+  // private final JoystickButton launch = new JoystickButton(driver, 6);
+  // private final JoystickButton preset1 = new JoystickButton(operator, 2);
+  // private final JoystickButton preset2 = new JoystickButton(operator, 3);
+  // private final JoystickButton preset3 = new JoystickButton(operator, 4);
+  // private final JoystickButton subwooferArm = new JoystickButton(driver, 2);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -66,9 +67,9 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
-            () -> -driver.getRawAxis(translationAxis),
+            () -> driver.getRawAxis(translationAxis),
             () -> driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(rotationAxis),
+            () -> -driver.getRawAxis(2),
             () -> robotCentric.getAsBoolean()));
     
     // s_Swerve.setDefaultCommand(
@@ -79,12 +80,12 @@ public class RobotContainer {
     //         () -> robotCentric.getAsBoolean(),
     //         new int[]{5}));
 
-    arm.setDefaultCommand(
-      new ArmJoystickCommand(
-        arm,
-        () -> operator.getRawAxis(0)
-      )
-    );
+    // arm.setDefaultCommand(
+    //   new ArmJoystickCMD(
+    //     arm,
+    //     () -> operator.getRawAxis(1)
+    //   )
+    // );
 
     launcher.setDefaultCommand(
       new LauncherTriggerCMD(
@@ -93,16 +94,24 @@ public class RobotContainer {
       )
     );
 
+    feed.setDefaultCommand(
+        new FeedTriggerCMD(
+        feed,
+      () -> operator.getRawAxis(5),
+      () -> operator.getRawAxis(3)
+      )
+    );
+
     intake.setDefaultCommand(
       new IntakeTriggerCMD(
         intake,
-        () -> operator.getRawAxis(1)
+        () -> operator.getRawAxis(5)
       )
     );
     
     //Register Named Commands - Temporary
     //NamedCommands.registerCommand("test", new Lock(s_Swerve));
-    NamedCommands.registerCommand("Lock", new Lock(s_Swerve));
+    NamedCommands.registerCommand("Lock", new LockCMD(s_Swerve));
 
     // Configure the button bindingszeroGyro
     configureButtonBindings();
@@ -121,16 +130,16 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-    lock.onTrue(new Lock(s_Swerve));
-    slow.onTrue(new SlowMode(s_Swerve, 0.5)).onFalse(new SlowMode(s_Swerve, 3));
-    resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
-    climb.onTrue(new InstantCommand(() -> climber.toggle()));
-    pickup.toggleOnTrue(new IntakeCMD(intake, arm));
-    launch.toggleOnTrue(new ShootCMD(launcher, feed, intake, arm));
-    preset1.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.intakePos)));
-    preset2.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.nearLaunchPosition)));
-    preset3.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.farLaunchPosition)));
-    subwooferArm.onTrue(new InstantCommand(() -> arm.setTargetPosition(Constants.OperatorConstants.ampLaunchPosition)));
+    lock.onTrue(new LockCMD(s_Swerve));
+    slow.onTrue(new SetSwerveSpeedCMD(s_Swerve, 0.5)).onFalse(new SetSwerveSpeedCMD(s_Swerve,1));
+    // resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
+    // climb.onTrue(new InstantCommand(() -> climber.toggle()));
+    // pickup.toggleOnTrue(new IntakeCMD(intake, arm));
+    // launch.toggleOnTrue(new ShootCMD(launcher, feed, intake, arm));
+    // preset1.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePos));
+    // preset2.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.nearLaunchPosition));
+    // preset3.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.farLaunchPosition));
+    // subwooferArm.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.ampLaunchPosition));
   }
 
   /**

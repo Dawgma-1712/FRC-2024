@@ -19,7 +19,11 @@ public class LauncherTriggerCMD extends Command{
 
     @Override
     public void execute() {
-        if(speed.get() < Constants.OperatorConstants.LauncherDeadband) launcher.setSpeed(speed.get());
+        if(speed.get() > Constants.OperatorConstants.LauncherDeadband){
+            launcher.setSpeed(speed.get());
+        }else{
+            launcher.setSpeed(0);
+        }
     }
 
     @Override

@@ -1,14 +1,13 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
+
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.*;
 
-public class Lock extends Command{
+public class LockCMD extends Command{
     private final Swerve swerve;
 
-    public Lock(Swerve swerve){
+    public LockCMD(Swerve swerve){
         this.swerve = swerve;
         addRequirements(swerve);
     }
@@ -20,7 +19,7 @@ public class Lock extends Command{
 
     @Override
     public void execute(){
-        swerve.setLock(!swerve.getLockedState());
+        swerve.toggleLock();
     }
 
     @Override

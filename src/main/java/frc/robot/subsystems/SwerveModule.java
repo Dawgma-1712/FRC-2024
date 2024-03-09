@@ -43,9 +43,11 @@ public class SwerveModule {
   private double angleKP;
   private double angleKI;
   private double angleKD;
-  private double driveKP;
-  private double driveKI;
-  private double driveKD;
+  // private double driveKP;
+  // private double driveKI;
+  // private double driveKD;
+
+  private double desiredSpeed;
 
   private final SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
@@ -58,9 +60,9 @@ public class SwerveModule {
     this.angleKP = angleKP;
     this.angleKI = angleKI;
     this.angleKD = angleKD;
-    this.driveKP = driveKP;
-    this.driveKI = driveKI;
-    this.driveKD = driveKD;
+    // this.driveKP = driveKP;
+    // this.driveKI = driveKI;
+    // this.driveKD = driveKD;
 
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
@@ -94,7 +96,8 @@ public class SwerveModule {
   }
 
   public void resetToAbsolute() {
-    double absolutePosition = getCanCoder().getDegrees();
+    // double absolutePosition = getCanCoder().getDegrees();
+    double absolutePosition = 0;
     integratedAngleEncoder.setPosition(absolutePosition);
   }
 
@@ -148,6 +151,7 @@ public class SwerveModule {
           0,
           feedforward.calculate(desiredState.speedMetersPerSecond));
     }
+    desiredSpeed = desiredState.speedMetersPerSecond;
   }
 
   private void setAngle(SwerveModuleState desiredState, Boolean locked) {
@@ -182,6 +186,11 @@ public class SwerveModule {
     return new SwerveModulePosition(driveEncoder.getPosition(), getAngle());
   }
 
+   public double getTargetVelocity(){
+    return desiredSpeed;
+  }
+
+  
   public void stop(){
     driveMotor.set(0);
     angleMotor.set(0);

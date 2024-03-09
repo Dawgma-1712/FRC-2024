@@ -5,15 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-//import frc.robot.Constants.Swerve;
 import frc.robot.subsystems.*;
 
-public class SlowMode extends Command {
+public class SetSwerveSpeedCMD extends Command {
 
   private final Swerve swerve;
   private double percentSpeed;
 
-  public SlowMode(Swerve swerve, double percentSpeed) {
+  public SetSwerveSpeedCMD(Swerve swerve, double percentSpeed) {
     this.swerve = swerve;
     this.percentSpeed = percentSpeed;
   }

@@ -18,7 +18,7 @@ public final class Constants {
     public static final double stickDeadband = 0.1;
 
     public static final int pigeonID = 6;
-    public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+    public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
     /* Drivetrain Constants */
     public static final double trackWidth = Units.inchesToMeters(21.73);
@@ -29,7 +29,7 @@ public final class Constants {
     public static final double openLoopRamp = 0.25;
     public static final double closedLoopRamp = 0.0;
 
-    public static final double driveGearRatio = (6 / 1.0); // 8.14:1, current value is def wrong, but quick fix
+    public static final double driveGearRatio = (8.14 / 1.0); // 8.14:1, current value is def wrong, but quick fix
     public static final double angleGearRatio = (21.43 / 1.0); // 12.8:1
 
     public static final SwerveDriveKinematics swerveKinematics =
@@ -44,7 +44,7 @@ public final class Constants {
 
     /* Swerve Current Limiting */
     public static final int angleContinuousCurrentLimit = 20;
-    public static final int driveContinuousCurrentLimit = 80;
+    public static final int driveContinuousCurrentLimit = 50;
 
     /* Slew Rate Limiter for Tele-Op Swerve */
     public static final double translationSlewRate = 3;
@@ -55,7 +55,7 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.2;
+    public static final double driveKP = 0.1;//0.2;
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
     public static final double driveKFF = 0.0;
@@ -82,8 +82,8 @@ public final class Constants {
     public static final double angleConversionFactor = 360.0 / angleGearRatio;
 
     /* Swerve Profiling Values */
-    public static double maxSpeed = 1; // meters per second
-    public static final double maxAngularVelocity = 2;
+    public static final double maxSpeed = 3; // meters per second
+    public static final double maxAngularVelocity = 4;//2;
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
@@ -91,7 +91,7 @@ public final class Constants {
 
     /* Motor Inverts */
     public static final boolean driveInvert = false;
-    public static final boolean angleInvert = false;
+    public static final boolean angleInvert = true;
 
     /* Angle Encoder Invert */
     public static final boolean canCoderInvert = true;
@@ -99,46 +99,46 @@ public final class Constants {
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
     public static final class Mod0 {
-      public static final int driveMotorID = 8;//4;
-      public static final int angleMotorID = 7;//3;
-      public static final int canCoderID = 9;//1;
+      public static final int driveMotorID = 1;
+      public static final int angleMotorID = 2;
+      public static final int canCoderID = 3;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-      public static final double[] anglePID = {0.03, 0.0, 0.15};
+      public static final double[] anglePID = {0.025, 0.0, 0.12};
     }
 
     /* Front Right Module - Module 1 */
     public static final class Mod1 {
-      public static final int driveMotorID = 5;//14;
-      public static final int angleMotorID = 4;//13;
-      public static final int canCoderID = 6;//2;
+      public static final int driveMotorID = 5;
+      public static final int angleMotorID = 4;
+      public static final int canCoderID = 6;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-      public static final double[] anglePID = {0.022, 0.0, 0.11};
+      public static final double[] anglePID = {0.025, 0.0, 0.12};
     }
 
     /* Back Left Module - Module 2 */
     public static final class Mod2 {
-      public static final int driveMotorID = 11;//2;8
-      public static final int angleMotorID = 10;//1;7
-      public static final int canCoderID = 12;//3;9
+      public static final int driveMotorID = 8;
+      public static final int angleMotorID = 7;
+      public static final int canCoderID = 9;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-      public static final double[] anglePID = {0.026, 0.0, 0.12};
+      public static final double[] anglePID = {0.025, 0.0, 0.12};
     }
 
     /* Back Right Module - Module 3 */
     public static final class Mod3 {
-      public static final int driveMotorID =2;//15;
-      public static final int angleMotorID = 1;//16;
-      public static final int canCoderID = 3;//4;
+      public static final int driveMotorID =11;
+      public static final int angleMotorID = 10;
+      public static final int canCoderID = 12;
       public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0);
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
-      public static final double[] anglePID = {0.023, 0.0, 0.11};
+      public static final double[] anglePID = {0.025, 0.0, 0.12};
     }
   }
 
@@ -166,9 +166,11 @@ public final class Constants {
   public static final class EndEffectorConstants {
     public static final double launchSpeed = 0.8;
     public static final double launchTime = 5;
-    public static final double launcherThreshold = 0.8;
+    public static final double launcherThreshold = 0.1;
     public static final double intakeSpeed = 0.8;
+    public static final double intakeDeadband = 0.1;
     public static final double feedSpeed = 0.8;
+    public static final double feedDeadband = 0.1;
 
     public static final double armRaiseKP = 0.25;
     public static final double armRaiseKI = 0.25;
@@ -180,22 +182,6 @@ public final class Constants {
   }
 
   public static final class OperatorConstants{
-    public static final Map<String, Double> armExtendPresets = Map.ofEntries(
-      Map.entry("coneMid", 37.0),
-      Map.entry("coneHigh", 200.0),
-      Map.entry("cubeMid", 30.0),
-      Map.entry("cubeHigh", 200.0),
-      Map.entry("stow", 0.0),
-      Map.entry("substation", 120.0),
-      Map.entry("ground", 0.0));
-    public static final Map<String, Double> armRaisePresets = Map.ofEntries(
-      Map.entry("coneMid", 16.8),
-      Map.entry("coneHigh", 16.0),
-      Map.entry("cubeMid", 18.0),
-      Map.entry("cubeHigh", 17.0),
-      Map.entry("stow", 0.0),
-      Map.entry("substation", 16.2),
-      Map.entry("ground", 28.5));
     public static final int OperatorControllerPort = 1;
     public static final int DriverControllerPort = 0;
     public static final int OperatorRaise = 5;
