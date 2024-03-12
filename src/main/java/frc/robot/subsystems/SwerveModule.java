@@ -103,8 +103,10 @@ public class SwerveModule {
 
   private void configAngleEncoder() {
     CANcoderConfiguration config = new CANcoderConfiguration();
-    config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
+    config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
+    //need to check if correct wya is positive
     config.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+    // config.MagnetSensor.withAbsoluteSensorRange()
     angleEncoder.getConfigurator().apply(config);
     angleEncoder.getPosition().setUpdateFrequency(100);
     angleEncoder.getVelocity().setUpdateFrequency(100);
