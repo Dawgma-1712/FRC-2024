@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,7 +21,7 @@ public class ArmJoystickCMD extends Command{
     public void execute() {
         if(Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband){
             double raise = Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband ? raiseValue.get() : 0;
-            arm.setSpeed(raise+ Constants.OperatorConstants.gOffset);
+            arm.setSpeed(raise + Constants.OperatorConstants.gOffset);
         }else{
             arm.setSpeed(0);
         }

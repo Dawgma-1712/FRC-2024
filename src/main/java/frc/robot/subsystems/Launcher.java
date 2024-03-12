@@ -12,8 +12,8 @@ import frc.robot.commands.*;
 public class Launcher extends SubsystemBase{
     private final CANSparkMax leftMotor = new CANSparkMax(17, MotorType.kBrushless);
     private final CANSparkMax rightMotor = new CANSparkMax(18, MotorType.kBrushless);
-    // private final SparkPIDController leftController = leftMotor.getPIDController();
-    // private final SparkPIDController rightController = rightMotor.getPIDController();
+    private final SparkPIDController leftController = leftMotor.getPIDController();
+    private final SparkPIDController rightController = rightMotor.getPIDController();
     public static boolean isSpinning = false;
     public static boolean checkDirection = true;
 
@@ -21,10 +21,10 @@ public class Launcher extends SubsystemBase{
     }
 
     public void setSpeed(double speed) {
-        leftMotor.set(-speed);
-        rightMotor.set(-speed);
-        // leftController.setReference(-speed, ControlType.kVelocity);
-        // rightController.setReference(-speed, ControlType.kVelocity);
+        // leftMotor.set(-speed);
+        // rightMotor.set(-speed);
+        leftController.setReference(-speed, ControlType.kVelocity);
+        rightController.setReference(-speed, ControlType.kVelocity);
     }
 
     public void stop(){

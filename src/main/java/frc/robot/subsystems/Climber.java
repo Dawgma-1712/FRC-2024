@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
 
@@ -13,7 +14,7 @@ public class Climber extends SubsystemBase {
   private boolean extended = false;
 
   public Climber() {
-    compressor.enableAnalog(60, 120);
+    compressor.enableAnalog(Constants.OperatorConstants.minPressure, Constants.OperatorConstants.maxPressure);
     System.out.println("Compressor enabled");
   }
 

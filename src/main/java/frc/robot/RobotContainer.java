@@ -17,7 +17,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
-import frc.robot.commands.auto.DriveStraightCMD;
+import frc.robot.commands.manual.ArmJoystickCMD;
+import frc.robot.commands.manual.FeedTriggerCMD;
+import frc.robot.commands.manual.IntakeTriggerCMD;
+import frc.robot.commands.manual.LauncherTriggerCMD;
+import frc.robot.commands.manual.TeleopSwerve;
+import frc.robot.commands.presets.DriveStraightCMD;
+import frc.robot.commands.presets.LockCMD;
+import frc.robot.commands.presets.SetSwerveSpeedCMD;
 import frc.robot.subsystems.*;
 
 /**
@@ -40,26 +47,20 @@ public class RobotContainer {
   private final Joystick driver = new Joystick(0);
   private final Joystick operator = new Joystick(1);
 
-  /* Drive Controls */
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
-
   /* Driver Buttons */
   private final JoystickButton zeroGyro =
-      new JoystickButton(driver, XboxController.Button.kY.value);
+      new JoystickButton(driver, Constants.ControllerMap.y);
   private final JoystickButton robotCentric =
-      new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton lock = new JoystickButton(driver, 3);
-  private final JoystickButton slow = new JoystickButton(driver, 1);
-  // private final JoystickButton resetToLimelight = new JoystickButton(driver, 2);
-  // private final JoystickButton climb = new JoystickButton(driver, 4);
-  // private final JoystickButton pickup = new JoystickButton(driver, 5);
-  // private final JoystickButton launch = new JoystickButton(driver, 6);
-  // private final JoystickButton preset1 = new JoystickButton(operator, 2);
-  // private final JoystickButton preset2 = new JoystickButton(operator, 3);
-  // private final JoystickButton preset3 = new JoystickButton(operator, 4);
-  // private final JoystickButton subwooferArm = new JoystickButton(driver, 2);
+      new JoystickButton(driver, Constants.ControllerMap.LB);
+  private final JoystickButton lock = new JoystickButton(driver, Constants.ControllerMap.x);
+  private final JoystickButton slow = new JoystickButton(driver, Constants.ControllerMap.a);
+  // private final JoystickButton resetToLimelight = new JoystickButton(driver, Constants.ControllerMap.b);
+  // private final JoystickButton climb = new JoystickButton(driver, Constants.ControllerMap.y);
+  // private final JoystickButton pickup = new JoystickButton(driver, Constants.ControllerMap.LB);
+  // private final JoystickButton launch = new JoystickButton(driver, Constants.ControllerMap.RB);
+  // private final JoystickButton preset1 = new JoystickButton(operator, Constants.ControllerMap.b);
+  // private final JoystickButton preset2 = new JoystickButton(operator, Constants.ControllerMap.x);
+  // private final JoystickButton preset3 = new JoystickButton(operator, Constants.ControllerMap.y);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -71,9 +72,9 @@ public class RobotContainer {
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
-            () -> driver.getRawAxis(translationAxis),
-            () -> driver.getRawAxis(strafeAxis),
-            () -> -driver.getRawAxis(2),
+            () -> driver.getRawAxis(Constants.ControllerMap.leftStickY),
+            () -> driver.getRawAxis(Constants.ControllerMap.leftStickX),
+            () -> -driver.getRawAxis(Constants.ControllerMap.rightStickX),
             () -> robotCentric.getAsBoolean()));
     
     // s_Swerve.setDefaultCommand(
@@ -87,29 +88,29 @@ public class RobotContainer {
     arm.setDefaultCommand(
       new ArmJoystickCMD(
         arm,
-        () -> operator.getRawAxis(1)
+        () -> operator.getRawAxis(Constants.ControllerMap.leftStickY)
       )
     );
 
     launcher.setDefaultCommand(
       new LauncherTriggerCMD(
         launcher,
-      () -> operator.getRawAxis(3)
+      () -> operator.getRawAxis(Constants.ControllerMap.leftTrigger)
       )
     );
 
     feed.setDefaultCommand(
         new FeedTriggerCMD(
         feed,
-      () -> operator.getRawAxis(5),
-      () -> operator.getRawAxis(3)
+      () -> operator.getRawAxis(Constants.ControllerMap.rightStickY),
+      () -> operator.getRawAxis(Constants.ControllerMap.rightStickY)
       )
     );
 
     intake.setDefaultCommand(
       new IntakeTriggerCMD(
         intake,
-        () -> operator.getRawAxis(5)
+        () -> operator.getRawAxis(Constants.ControllerMap.rightStickY)
       )
     );
     

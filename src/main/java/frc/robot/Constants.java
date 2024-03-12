@@ -14,6 +14,27 @@ import frc.lib.config.SwerveModuleConstants;
 
 public final class Constants {
 
+  public static final class ControllerMap {
+
+    //Joysticks
+    public static final int leftStickX = 0;
+    public static final int leftStickY = 1;
+    public static final int leftTrigger = 2;
+    public static final int rightTrigger = 3;
+    public static final int rightStickX = 4;
+    public static final int rightStickY = 5;
+
+    //Buttons
+    public static final int a = 1;
+    public static final int b = 2;
+    public static final int x = 3;
+    public static final int y = 4;
+    public static final int LB = 5;
+    public static final int RB = 6;
+    public static final int back = 7;
+    public static final int start = 8;
+  }
+
   public static final class Swerve {
     public static final double stickDeadband = 0.1;
 
@@ -84,6 +105,7 @@ public final class Constants {
     /* Swerve Profiling Values */
     public static final double maxSpeed = 3; // meters per second
     public static final double maxAngularVelocity = 4;//2;
+    public static final double teleopScalar = 30;
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;
@@ -224,6 +246,14 @@ public final class Constants {
     public static final double launchDistance1 = 3;
     public static final double launchDistance2 = 1;
     public static final double launchMidpoint = (launchDistance1 + launchDistance2) / 2;
+
+    //Limit Switch Constants
+    public static final double topSwitch = degreesToArmRot * 0;
+    public static final double bottomSwitch = degreesToArmRot * 90;
+
+    //Pneumatics Constants
+    public static final double minPressure = 60;
+    public static final double maxPressure = 120;
 
     public static final double setpointRange = 5;
 

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -50,7 +50,7 @@ public class TeleopSwerve extends Command {
 
     /* Drive */
     s_Swerve.drive(
-        new Translation2d(translationVal, strafeVal).times(30),
+        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.teleopScalar),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         !robotCentricSup.getAsBoolean(),
         false);
