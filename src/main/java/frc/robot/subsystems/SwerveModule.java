@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.sensors.CANCoder;
 //import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -55,8 +56,6 @@ public class SwerveModule {
 
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants, double angleKP, double angleKI, double angleKD) {
     this.moduleNumber = moduleNumber;
-    angleOffset = moduleConstants.angleOffset;
-
     this.angleKP = angleKP;
     this.angleKI = angleKI;
     this.angleKD = angleKD;
@@ -175,7 +174,7 @@ public class SwerveModule {
   }
 
   public Rotation2d getCanCoder() {
-    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition() - angleOffset.getDegrees());
+    return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
   }
 
   public SwerveModuleState getState() {

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -64,6 +65,8 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
+    SmartDashboard.putBoolean("seneca auto", false);
+    
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
@@ -80,12 +83,12 @@ public class RobotContainer {
     //         () -> robotCentric.getAsBoolean(),
     //         new int[]{5}));
 
-    // arm.setDefaultCommand(
-    //   new ArmJoystickCMD(
-    //     arm,
-    //     () -> operator.getRawAxis(1)
-    //   )
-    // );
+    arm.setDefaultCommand(
+      new ArmJoystickCMD(
+        arm,
+        () -> operator.getRawAxis(1)
+      )
+    );
 
     launcher.setDefaultCommand(
       new LauncherTriggerCMD(
@@ -131,7 +134,7 @@ public class RobotContainer {
     /* Driver Buttons */
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     lock.onTrue(new LockCMD(s_Swerve));
-    slow.onTrue(new SetSwerveSpeedCMD(s_Swerve, 0.5)).onFalse(new SetSwerveSpeedCMD(s_Swerve,1));
+    slow.onTrue(new SetSwerveSpeedCMD(s_Swerve, 0.5)).onFalse(new SetSwerveSpeedCMD(s_Swerve,3));
     // resetToLimelight.onTrue(new InstantCommand(() -> s_Swerve.resetOdometryToLimelight()));
     // climb.onTrue(new InstantCommand(() -> climber.toggle()));
     // pickup.toggleOnTrue(new IntakeCMD(intake, arm));
@@ -150,6 +153,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return new exampleAuto(s_Swerve);
-    return autoChooser.getSelected();
+    return new DriveStraightCMD(s_Swerve);
+    // if(SmartDashboard.getBoolean("seneca auto", false)){
+    //   return new DriveStraightCMD(s_Swerve);
+    // }else{
+    //   return new WaitCommand(1);
+    // }
+    // return autoChooser.getSelected();
   }
 }

@@ -21,7 +21,7 @@ public class ArmJoystickCMD extends Command{
     public void execute() {
         if(Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband){
             double raise = Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband ? raiseValue.get() : 0;
-            arm.setSpeed(raise*0.5);
+            arm.setSpeed(raise+ Constants.OperatorConstants.gOffset);
         }else{
             arm.setSpeed(0);
         }
