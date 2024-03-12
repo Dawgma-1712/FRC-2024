@@ -76,16 +76,16 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.3;//0.2;
+    public static final double driveKP = 0.0;//0.2;
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
     public static final double driveKFF = 0.0;
 
     /* Swerve Autonomous PID Values & Configuration */
-    public static final double translationKP = 0.01;
+    public static final double translationKP = 0.0;
     public static final double translationKI = 0.0;
     public static final double translationKD = 0.0;
-    public static final double rotationKP = 0.0001;
+    public static final double rotationKP = 0.0;
     public static final double rotationKI = 0.0;
     public static final double rotationKD = 0.0;
     public static final double maxModuleSpeed = 2.0;
@@ -121,8 +121,8 @@ public final class Constants {
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
     public static final class Mod0 {
-      public static final int driveMotorID = 1;
-      public static final int angleMotorID = 2;
+      public static final int driveMotorID = 2;
+      public static final int angleMotorID = 1;
       public static final int canCoderID = 3;
       public static final SwerveModuleConstants constants =
           new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID);

@@ -28,36 +28,37 @@ public class Arm extends SubsystemBase{
     private boolean positionControl = false;
 
     public Arm(){
+        stop();
         raiseMotor2.setInverted(true);
         System.out.println("Arm instantiated!");
     }
 
     public void periodic(){
-        if(positionControl){
-            raiseMotor1.set(armRaisePID1.calculate(getRaise1Position(), raiseGoalState));
-            raiseMotor2.set(armRaisePID2.calculate(getRaise2Position(), raiseGoalState));
-        }
+        // if(positionControl){
+        //     raiseMotor1.set(armRaisePID1.calculate(getRaise1Position(), raiseGoalState));
+        //     raiseMotor2.set(armRaisePID2.calculate(getRaise2Position(), raiseGoalState));
+        // }
         
-        SmartDashboard.putNumber("Raise Goal Position", raiseGoalState);
-        SmartDashboard.putNumber("Raise Position", getPosition());
+        // SmartDashboard.putNumber("Raise Goal Position", raiseGoalState);
+        // SmartDashboard.putNumber("Raise Position", getPosition());
 
-        if(limitSwitchTop.get()) {
-            raiseEncoder1.setPosition(Constants.OperatorConstants.topSwitch);
-            raiseEncoder2.setPosition(Constants.OperatorConstants.topSwitch);
+        // if(limitSwitchTop.get()) {
+        //     raiseEncoder1.setPosition(Constants.OperatorConstants.topSwitch);
+        //     raiseEncoder2.setPosition(Constants.OperatorConstants.topSwitch);
 
-            if(raiseEncoder1.getVelocity() < 0) {
-                stop();
-            }
-        }
+        //     if(raiseEncoder1.getVelocity() < 0) {
+        //         stop();
+        //     }
+        // }
 
-        if(limitSwitchBottom.get()) {
-            raiseEncoder1.setPosition(Constants.OperatorConstants.bottomSwitch);
-            raiseEncoder2.setPosition(Constants.OperatorConstants.bottomSwitch);
+        // if(limitSwitchBottom.get()) {
+        //     raiseEncoder1.setPosition(Constants.OperatorConstants.bottomSwitch);
+        //     raiseEncoder2.setPosition(Constants.OperatorConstants.bottomSwitch);
 
-            if(raiseEncoder1.getVelocity() > 0) {
-                stop();
-            }
-        }
+        //     if(raiseEncoder1.getVelocity() > 0) {
+        //         stop();
+        //     }
+        // }
     }
 
 
@@ -81,8 +82,8 @@ public class Arm extends SubsystemBase{
 
     public void setIdle(){
         System.out.println("Set idle");
-        raiseMotor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        raiseMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        // raiseMotor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        // raiseMotor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
     public void setTargetPosition(double raiseGoalState) {
@@ -93,8 +94,8 @@ public class Arm extends SubsystemBase{
      public void setSpeed(double speed) {
         positionControl = false;
         // if(speed<0){
-            raiseMotor1.set(-speed*0.15);
-            raiseMotor2.set(-speed*0.15);
+            // raiseMotor1.set(-speed*0.15);
+            // raiseMotor2.set(-speed*0.15);
         // }else{
         //     raiseMotor1.set(0);
         //     raiseMotor2.set(0);

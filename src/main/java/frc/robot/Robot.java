@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import frc.lib.config.CTREConfigs;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -17,7 +16,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  public static CTREConfigs ctreConfigs = new CTREConfigs();
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
