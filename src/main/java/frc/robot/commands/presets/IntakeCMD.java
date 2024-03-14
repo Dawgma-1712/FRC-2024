@@ -1,26 +1,32 @@
 package frc.robot.commands.presets;
-// package frc.robot.commands;
 
-// import frc.robot.Constants;
-// import frc.robot.subsystems.*;
-// import edu.wpi.first.wpilibj2.command.InstantCommand;
-// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
+import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
-// public class IntakeCMD extends SequentialCommandGroup{
-//     Intake intake;
-//     Arm arm;
+public class IntakeCMD extends SequentialCommandGroup{
+    Intake intake;
+    Arm arm;
+    Feed feed;
 
-//     public IntakeCMD(Intake intake, Arm arm){
-//         this.arm = arm;
-//         this.intake = intake;
-//         addRequirements(arm, intake);
+    public IntakeCMD(Intake intake, Arm arm, Feed feed){
+        this.arm = arm;
+        this.intake = intake;
+        this.feed = feed;
+        addRequirements(arm, intake);
         
-//         addCommands(
-//             new SetArmPositionCMD(arm, Constants.OperatorConstants.nearLaunchPosition),
-//             new InstantCommand(() -> intake.setSpeed(Constants.EndEffectorConstants.intakeSpeed))
-//         );
-//     }
-// }
+        addCommands(
+            new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePos),
+            new InstantCommand(() -> intake.setSpeed(Constants.EndEffectorConstants.intakeSpeed)),
+            new InstantCommand(() -> feed.setSpeed(Constants.EndEffectorConstants.feedSpeed)),
+            new WaitCommand(Constants.EndEffectorConstants.intakeTime),
+            new InstantCommand(() -> intake.setSpeed(0)),
+            new InstantCommand(() -> feed.setSpeed(0))
+        );
+    }
+}
 
     
