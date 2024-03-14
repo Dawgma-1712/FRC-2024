@@ -125,6 +125,8 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Select Auto", autoChooser);
+
+    SmartDashboard.putNumber("Wait Time", 0);
   }
 
   /**
@@ -162,12 +164,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return new exampleAuto(s_Swerve);
-    return new DriveStraightCMD(s_Swerve);
+    //return new DriveStraightCMD(s_Swerve);
     // if(SmartDashboard.getBoolean("seneca auto", false)){
     //   return new DriveStraightCMD(s_Swerve);
     // }else{
     //   return new WaitCommand(1);
     // }
-    // return autoChooser.getSelected();
+    return autoChooser.getSelected();
   }
 }
