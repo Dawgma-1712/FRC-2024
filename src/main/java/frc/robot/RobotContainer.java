@@ -117,7 +117,7 @@ public class RobotContainer {
     //NamedCommands.registerCommand("test", new Lock(s_Swerve));
     NamedCommands.registerCommand("Lock", new LockCMD(s_Swerve));
     NamedCommands.registerCommand("Shoot", new ShootAndStopCMD(launcher, feed, intake, arm));
-    NamedCommands.registerCommand("Pickup", new PrintCommand("Placeholder"));
+    NamedCommands.registerCommand("Pickup", new IntakeCMD(intake, arm, feed));
 
     // Configure the button bindingszeroGyro
     configureButtonBindings();

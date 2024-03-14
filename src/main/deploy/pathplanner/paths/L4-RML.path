@@ -1,0 +1,278 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.49546117110252225,
+        "y": 6.646941582171453
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.3459738631188973,
+        "y": 6.933527380568275
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.325912399572547,
+        "y": 4.113892912470511
+      },
+      "prevControl": {
+        "x": 2.113284226568453,
+        "y": 4.28954227277824
+      },
+      "nextControl": {
+        "x": 2.465341162969172,
+        "y": 3.998712629664603
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.2073033155075317,
+        "y": 4.82573505687552
+      },
+      "prevControl": {
+        "x": 1.129837986379531,
+        "y": 4.785666783188623
+      },
+      "nextControl": {
+        "x": 1.7434960996048117,
+        "y": 5.103076152098251
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.325912399572547,
+        "y": 5.556066607628711
+      },
+      "prevControl": {
+        "x": 2.5410724446528548,
+        "y": 5.569514110446231
+      },
+      "nextControl": {
+        "x": 2.0300818980016335,
+        "y": 5.537577201280529
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.2073033155075317,
+        "y": 5.556066607628711
+      },
+      "prevControl": {
+        "x": 1.1980586123334407,
+        "y": 5.546821904454621
+      },
+      "nextControl": {
+        "x": 1.416589184830429,
+        "y": 5.765352476951594
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.325912399572547,
+        "y": 7.016729709135094
+      },
+      "prevControl": {
+        "x": 2.458408753685432,
+        "y": 7.14922606324798
+      },
+      "nextControl": {
+        "x": 2.17799714878709,
+        "y": 6.868814458349638
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7250066932566295,
+        "y": 6.230929939337357
+      },
+      "prevControl": {
+        "x": 2.0855501170461794,
+        "y": 6.628452175823271
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": -34.1596945456694,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "ShootEvent",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PickupEvent",
+      "waypointRelativePos": 1.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ShootEvent",
+      "waypointRelativePos": 2.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PickupEvent",
+      "waypointRelativePos": 3.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ShootEvent",
+      "waypointRelativePos": 4.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "PickupEvent",
+      "waypointRelativePos": 5.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "ShootEvent",
+      "waypointRelativePos": 6.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Shoot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 34.69515353123389,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Four Note",
+  "previewStartingState": {
+    "rotation": 59.74356283647076,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

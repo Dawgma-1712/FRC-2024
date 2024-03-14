@@ -16,32 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.0,
+        "x": 2.325912399572547,
         "y": 5.56
       },
       "prevControl": {
-        "x": 2.658721713839824,
-        "y": 5.546821904454621
-      },
-      "nextControl": {
-        "x": 1.9861062468713464,
-        "y": 5.56027795228602
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.5570299789248225,
+        "x": 2.3398089327183844,
         "y": 5.56
       },
-      "prevControl": {
-        "x": 2.7230466806176303,
-        "y": 5.5595860650811
-      },
       "nextControl": {
-        "x": 2.391013277232014,
-        "y": 5.560413934918899
+        "x": 2.3120158664267088,
+        "y": 5.56
       },
       "isLocked": false,
       "linkedName": null
@@ -62,16 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 1,
       "rotationDegrees": 0,
-      "rotateFast": true
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "PickupEvent",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "parallel",
         "data": {
@@ -91,7 +75,7 @@
     },
     {
       "name": "ShootEvent",
-      "waypointRelativePos": 3.0,
+      "waypointRelativePos": 2.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -115,7 +99,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0.0,
     "rotateFast": true
   },
   "reversed": false,

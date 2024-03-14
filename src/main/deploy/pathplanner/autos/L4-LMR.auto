@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 0.49546117110252225,
+      "y": 6.646941582171453
+    },
+    "rotation": 58.495733280795825
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,12 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Three Note 1"
+            "pathName": "L4-LMR"
           }
         }
       ]
     }
   },
-  "folder": "Old Autos",
+  "folder": "Four Note",
   "choreoAuto": false
 }

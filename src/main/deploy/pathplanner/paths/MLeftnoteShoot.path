@@ -8,8 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.942072071654484,
-        "y": 5.56
+        "x": 1.7157619900825387,
+        "y": 6.286398158381903
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.325912399572547,
+        "y": 6.988995599612821
+      },
+      "prevControl": {
+        "x": 1.9099007567384503,
+        "y": 6.36035578377463
+      },
+      "nextControl": {
+        "x": 2.37718531419469,
+        "y": 7.066474670597393
       },
       "isLocked": false,
       "linkedName": null
@@ -17,43 +33,11 @@
     {
       "anchor": {
         "x": 1.34,
-        "y": 6.776367426608728
+        "y": 5.56
       },
       "prevControl": {
-        "x": 1.4325359296941513,
-        "y": 6.4258849445683675
-      },
-      "nextControl": {
-        "x": 1.2474640703058488,
-        "y": 7.126849908649089
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.17799714878709,
-        "y": 7.007485005961003
-      },
-      "prevControl": {
-        "x": 1.5705961114596356,
-        "y": 6.946744902228256
-      },
-      "nextControl": {
-        "x": 2.2704441805280005,
-        "y": 7.016729709135094
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.84,
-        "y": 5.57
-      },
-      "prevControl": {
-        "x": 2.1225289297451586,
-        "y": 5.694737155237091
+        "x": 1.6602937710379921,
+        "y": 6.1662170171187185
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.0,
       "rotationDegrees": 0.0,
       "rotateFast": true
     }
@@ -71,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "PickupEvent",
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -88,7 +72,7 @@
     },
     {
       "name": "ShootEvent",
-      "waypointRelativePos": 3.0,
+      "waypointRelativePos": 2.0,
       "command": {
         "type": "sequential",
         "data": {
@@ -129,7 +113,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0.0,
     "rotateFast": true
   },
   "reversed": false,
