@@ -53,6 +53,6 @@ public class TeleopSwerve extends Command {
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.teleopScalar),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         !robotCentricSup.getAsBoolean(),
-        false);
+        true);
   }
 }

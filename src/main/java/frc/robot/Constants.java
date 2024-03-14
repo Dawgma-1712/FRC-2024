@@ -105,7 +105,7 @@ public final class Constants {
     /* Swerve Profiling Values */
     public static final double maxSpeed = 3; // meters per second
     public static final double maxAngularVelocity = 4;//2;
-    public static final double teleopScalar = 30;
+    public static final double teleopScalar = 3;
 
     /* Neutral Modes */
     public static final IdleMode angleNeutralMode = IdleMode.kBrake;

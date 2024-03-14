@@ -64,7 +64,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
   private SendableChooser<Command> autoChooser;
-
+  
   public RobotContainer() {
     SmartDashboard.putBoolean("seneca auto", false);
     
@@ -146,6 +146,12 @@ public class RobotContainer {
     // preset2.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.nearLaunchPosition));
     // preset3.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.farLaunchPosition));
     // subwooferArm.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.ampLaunchPosition));
+  }
+
+  public void teleopInit(){
+    s_Swerve.resetEncoders();
+    //REMEMBER THIS LINE
+    s_Swerve.zeroGyro();
   }
 
   /**
