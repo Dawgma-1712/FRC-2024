@@ -186,6 +186,7 @@ public final class Constants {
     public static final double launchTime = 5;
     public static final double launcherThreshold = 0.1;
     public static final double intakeSpeed = 0.8;
+    public static final double intakeTime = 5;
     public static final double intakeDeadband = 0.1;
     public static final double feedSpeed = 0.8;
     public static final double feedDeadband = 0.1;
