@@ -87,7 +87,7 @@ public class RobotContainer {
     arm.setDefaultCommand(
       new ArmJoystickCMD(
         arm,
-        () -> operator.getRawAxis(Constants.ControllerMap.leftStickY)
+        () -> -operator.getRawAxis(Constants.ControllerMap.leftStickY)
       )
     );
 

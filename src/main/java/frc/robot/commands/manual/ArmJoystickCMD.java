@@ -19,13 +19,11 @@ public class ArmJoystickCMD extends Command{
 
     @Override
     public void execute() {
-         arm.setSpeed(0);
-        // if(Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband){
-        //     double raise = Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband ? raiseValue.get() : 0;
-        //     arm.setSpeed(raise + Constants.OperatorConstants.gOffset);
-        // }else{
-        //     arm.setSpeed(0);
-        // }
+        if(Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband){
+            arm.setSpeed(raiseValue.get());
+        }else{
+            arm.setSpeed(0);
+        }
         
     }
 

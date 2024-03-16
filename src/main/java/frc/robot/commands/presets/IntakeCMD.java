@@ -19,7 +19,7 @@ public class IntakeCMD extends SequentialCommandGroup{
         addRequirements(arm, intake);
         
         addCommands(
-            new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePos),
+            // new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePos),
             new InstantCommand(() -> intake.setSpeed(Constants.EndEffectorConstants.intakeSpeed)),
             new InstantCommand(() -> feed.setSpeed(Constants.EndEffectorConstants.feedSpeed)),
             new WaitCommand(Constants.EndEffectorConstants.intakeTime),
