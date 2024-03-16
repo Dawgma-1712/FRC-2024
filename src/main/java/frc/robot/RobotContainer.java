@@ -144,7 +144,7 @@ public class RobotContainer {
     // climb.onTrue(new InstantCommand(() -> climber.toggle()));
     // pickup.toggleOnTrue(new IntakeCMD(intake, arm));
     // launch.toggleOnTrue(new ShootCMD(launcher, feed, intake, arm));
-    // preset1.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePos));
+    // preset1.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePosition));
     // preset2.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.nearLaunchPosition));
     // preset3.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.farLaunchPosition));
     // subwooferArm.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.ampLaunchPosition));

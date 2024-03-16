@@ -42,26 +42,10 @@ public class Swerve extends SubsystemBase {
   private double percentSpeed;
 
   public Swerve() {
-    //gyro = new Pigeon2(Constants.Swerve.pigeonID);
-    //gyro.configFactoryDefault();
     zeroGyro();
 
     percentSpeed = 1;
     locked = false;
-      // new SwerveModule[] {
-      //     new SwerveModule(0, Constants.Swerve.Mod0.constants, 
-      //     0.03, 0.0, 0.15,
-      //     0.3, 0, 0),
-      //     new SwerveModule(1, Constants.Swerve.Mod1.constants, 
-      //     0.022, 0.0, 0.11,
-      //     1.5, 0, 0),
-      //     new SwerveModule(2, Constants.Swerve.Mod2.constants, 
-      //     0.026, 0.0, 0.12,
-      //     0.3, 0, 0),
-      //     new SwerveModule(3, Constants.Swerve.Mod3.constants, 
-      //     0.023, 0.0, 0.11,
-      //     0.3, 0, 0)
-      //   };
     mSwerveMods =
         new SwerveModule[] {
           new SwerveModule(0, Constants.Swerve.Mod0.constants, Constants.Swerve.Mod0.anglePID[0], Constants.Swerve.Mod0.anglePID[1], Constants.Swerve.Mod0.anglePID[2]),

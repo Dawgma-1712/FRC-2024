@@ -1,27 +1,23 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Constants;
+
 import frc.robot.commands.*;
 
 public class Feed extends SubsystemBase{
     private final CANSparkMax feedMotor = new CANSparkMax(16, MotorType.kBrushless);
-    private final SparkPIDController feedController = feedMotor.getPIDController();
 
     public Feed(){
     }
 
     public void setSpeed(double speed) {
-        if(Math.abs(speed)>Constants.EndEffectorConstants.feedDeadband){
-            feedController.setReference(speed, ControlType.kVelocity);
-        } else{
-            feedController.setReference(0, ControlType.kVelocity);
+        if(Math.abs(speed)>0.3){
+            feedMotor.set(speed);
         }
+        
     }
 
     public void feed(){

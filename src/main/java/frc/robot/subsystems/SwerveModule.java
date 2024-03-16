@@ -1,32 +1,21 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
-//import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.units.Distance;
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.Velocity;
 import frc.lib.config.SwerveModuleConstants;
 import frc.lib.math.OnboardModuleState;
 import frc.lib.util.CANSparkMaxUtil;
 import frc.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
-import frc.robot.Debug;
-import frc.robot.Robot;
 
 public class SwerveModule {
   public int moduleNumber;
@@ -44,9 +33,6 @@ public class SwerveModule {
   private double angleKP;
   private double angleKI;
   private double angleKD;
-  // private double driveKP;
-  // private double driveKI;
-  // private double driveKD;
 
   private double desiredSpeed;
 
@@ -59,9 +45,6 @@ public class SwerveModule {
     this.angleKP = angleKP;
     this.angleKI = angleKI;
     this.angleKD = angleKD;
-    // this.driveKP = driveKP;
-    // this.driveKI = driveKI;
-    // this.driveKD = driveKD;
 
     /* Angle Encoder Config */
     angleEncoder = new CANcoder(moduleConstants.cancoderID);
@@ -141,7 +124,7 @@ public class SwerveModule {
     } else {
       driveController.setReference(
           desiredState.speedMetersPerSecond,
-          com.revrobotics.ControlType.kVelocity,
+          ControlType.kVelocity,
           0,
           feedforward.calculate(desiredState.speedMetersPerSecond));
     }

@@ -76,7 +76,7 @@ public final class Constants {
     public static final double angleKFF = 0.0;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.0;//0.2;
+    public static final double driveKP = 0.0;
     public static final double driveKI = 0.0;
     public static final double driveKD = 0.0;
     public static final double driveKFF = 0.0;
@@ -160,7 +160,6 @@ public final class Constants {
     }
   }
 
-  
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 2;
     public static final double kMaxAccelerationMetersPerSecondSquared = 2;
@@ -191,9 +190,18 @@ public final class Constants {
     public static final double feedSpeed = 0.8;
     public static final double feedDeadband = 0.1;
 
-    public static final double armRaiseKP = 0.25;
-    public static final double armRaiseKI = 0.25;
-    public static final double armRaiseKD = 0.25;
+    public static final double armKP = 0.03;
+    public static final double armKI = 0;
+    public static final double armKD = 0;
+
+    //NEED TO MAKE FINAL LATER
+    public static double armLevelVoltage = 0.1;
+
+    public static final double maxArmSpeedUp = 0.25;
+    public static final double maxArmSpeedDown = -0.15;
+
+    public static final double armGearRatio = 1/125;
+    public static final double sprocketRatio = 36/22;
 
 //NEED TO CHANGE
     public static final double armClimbPosition = -5;
@@ -237,20 +245,16 @@ public final class Constants {
 
     public static final int[] targets = {5};
 
-    public static final double degreesToArmRot = 375/360;
+    public static final Rotation2d nearLaunchPosition = Rotation2d.fromDegrees(45);
+    public static final Rotation2d farLaunchPosition = Rotation2d.fromDegrees(95);
+    public static final Rotation2d ampLaunchPosition = Rotation2d.fromDegrees(85);
+    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(0);
 
-    public static final double nearLaunchPosition = degreesToArmRot * 45;
-    public static final double farLaunchPosition = degreesToArmRot * 5;
-    public static final double ampLaunchPosition = degreesToArmRot * -5;
-    public static final double intakePos = degreesToArmRot * 90;
+    public static final Rotation2d armStartingPosition = Rotation2d.fromDegrees(75);
 
     public static final double launchDistance1 = 3;
     public static final double launchDistance2 = 1;
     public static final double launchMidpoint = (launchDistance1 + launchDistance2) / 2;
-
-    //Limit Switch Constants
-    public static final double topSwitch = degreesToArmRot * 0;
-    public static final double bottomSwitch = degreesToArmRot * 90;
 
     //Pneumatics Constants
     public static final double minPressure = 60;

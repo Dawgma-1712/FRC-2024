@@ -21,10 +21,10 @@ public class Launcher extends SubsystemBase{
     }
 
     public void setSpeed(double speed) {
-        // leftMotor.set(-speed);
-        // rightMotor.set(-speed);
-        leftController.setReference(-speed, ControlType.kVelocity);
-        rightController.setReference(-speed, ControlType.kVelocity);
+        leftMotor.set(-speed);
+        rightMotor.set(-speed);
+        // leftController.setReference(-speed, ControlType.kVelocity);
+        // rightController.setReference(-speed, ControlType.kVelocity);
     }
 
     public void stop(){
