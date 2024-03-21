@@ -7,6 +7,7 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -37,14 +38,15 @@ public class Arm extends SubsystemBase{
     private GenericEntry KIChooser = armTab.addPersistent("arm ki", 0).getEntry();
     private GenericEntry KDChooser = armTab.addPersistent("arm kd", 0).getEntry();
 
-    private GenericEntry levelVoltageChooser = armTab.addPersistent("level voltage", 0).getEntry();
-
     private GenericEntry positionControlChooser = armTab.add("position control", false).getEntry();
 
     private GenericEntry targetAngleDisplay = armTab.add("Target Arm Angle", 0).getEntry();
     private GenericEntry currentAngleDisplay = armTab.add("Current Arm Angle",0).getEntry();
     private GenericEntry topSwitchDisplay = armTab.add("Top Limit Switch", false).getEntry();
-    private GenericEntry bottomSwitchDisplay  =armTab.add("Bottom Limit Switch", false).getEntry();
+    private GenericEntry bottomSwitchDisplay  = armTab.add("Bottom Limit Switch", false).getEntry();
+
+    private GenericEntry speed1Display = armTab.add("Speed 1", 0).getEntry();
+    private GenericEntry speed2Display = armTab.add("Speed 2",0).getEntry();
 
     public Arm(){
         setIdle();
@@ -63,26 +65,29 @@ public class Arm extends SubsystemBase{
             armRaisePID2.setP(KPChooser.getDouble(armRaisePID2.getP()));
             armRaisePID2.setI(KIChooser.getDouble(armRaisePID2.getI()));
             armRaisePID2.setD(KDChooser.getDouble(armRaisePID2.getD()));
-            Constants.EndEffectorConstants.armLevelVoltage = levelVoltageChooser.getDouble(Constants.EndEffectorConstants.armLevelVoltage);
+            positionControl = true;
         }
         
         if(positionControl){
-            speed1 = armRaisePID1.calculate(getAngle1().getDegrees(), targetAngle.getDegrees()) + calculateFeedForward(getAngle1());
-            speed2 = armRaisePID2.calculate(getAngle2().getDegrees(), targetAngle.getDegrees()) + calculateFeedForward(getAngle2());
+            speed1 = armRaisePID1.calculate(getAngle1().getDegrees(), targetAngle.getDegrees());
+            speed2 = armRaisePID2.calculate(getAngle2().getDegrees(), targetAngle.getDegrees());
         }
         
-        speed1 = MathUtil.clamp(speed1, Constants.EndEffectorConstants.maxArmSpeedDown, Constants.EndEffectorConstants.maxArmSpeedUp);
-        speed2 = MathUtil.clamp(speed2, Constants.EndEffectorConstants.maxArmSpeedDown, Constants.EndEffectorConstants.maxArmSpeedUp);
+        speed1 = MathUtil.clamp(speed1 + calculateFeedForward(getAngle1()), -Constants.EndEffectorConstants.maxArmSpeed, Constants.EndEffectorConstants.maxArmSpeed);
+        speed2 = MathUtil.clamp(speed2 + calculateFeedForward(getAngle2()), -Constants.EndEffectorConstants.maxArmSpeed, Constants.EndEffectorConstants.maxArmSpeed);
 
         targetAngleDisplay.setDouble(targetAngle.getDegrees());
         currentAngleDisplay.setDouble(getAngle().getDegrees());
+         
         topSwitchDisplay.setBoolean(limitSwitchTop.get());
         bottomSwitchDisplay.setBoolean(limitSwitchBottom.get());
+        speed1Display.setDouble(speed1);
+        speed2Display.setDouble(speed2);
 
         if(!limitSwitchTop.get()) {
             speed1 = Math.min(0, speed1);
             speed2 = Math.min(0, speed2);
-            resetEncoders(Rotation2d.fromDegrees(90));
+            resetEncoders(Rotation2d.fromDegrees(100));
         }
 
         if(limitSwitchBottom.get()) {
@@ -106,15 +111,15 @@ public class Arm extends SubsystemBase{
     }
 
     private double getRawPosition1(){
-        return raiseEncoder2.getPosition();
+        return raiseEncoder1.getPosition();
     }
 
     private double getRawPosition2(){
-        return raiseEncoder1.getPosition();
+        return raiseEncoder2.getPosition();
     }
     
     private double getRawPosition(){
-        return (getRawPosition1() + getRawPosition2())/2;
+        return (getRawPosition1() + getRawPosition2())/2.0;
     }
 
     private Rotation2d getAngle1(){
@@ -146,8 +151,8 @@ public class Arm extends SubsystemBase{
 
      public void setSpeed(double speed) {
         positionControl = false;
-        speed1 = speed<0 ? speed*0.15 : speed*0.25;
-        speed2 = speed<0 ? speed*0.15 : speed*0.25;
+        speed1 = speed*0.25;
+        speed2 = speed*0.25;
     }
 }
 

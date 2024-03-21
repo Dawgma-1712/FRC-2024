@@ -10,11 +10,11 @@ import frc.robot.Constants;
 public class Climber extends SubsystemBase {
 
   private final Compressor compressor = new Compressor(19, PneumaticsModuleType.REVPH);
-  private final DoubleSolenoid extender = new DoubleSolenoid(19, PneumaticsModuleType.REVPH, 1, 3);
+  private final DoubleSolenoid extender = new DoubleSolenoid(19, PneumaticsModuleType.REVPH, 0, 3);
   private boolean extended = false;
 
   public Climber() {
-    compressor.enableAnalog(Constants.OperatorConstants.minPressure, Constants.OperatorConstants.maxPressure);
+    compressor.enableDigital();
     System.out.println("Compressor enabled");
   }
 
@@ -29,6 +29,7 @@ public class Climber extends SubsystemBase {
   }
 
   public void toggle(){
+    System.out.println("fired");
     if(extended){
       backward();
     }else{

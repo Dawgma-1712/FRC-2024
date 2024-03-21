@@ -28,6 +28,7 @@ public class SetArmPositionCMD extends Command{
 
     @Override
     public boolean isFinished() {
-        return Math.abs(arm.getAngle().getDegrees()-angle.getDegrees()) < Constants.EndEffectorConstants.armThreshold;
+        return true;
+        // return Math.abs(arm.getAngle().getDegrees()-angle.getDegrees()) < Constants.EndEffectorConstants.armThreshold;
     }
 }

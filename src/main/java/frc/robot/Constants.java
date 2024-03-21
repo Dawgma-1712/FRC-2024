@@ -19,20 +19,20 @@ public final class Constants {
     //Joysticks
     public static final int leftStickX = 0;
     public static final int leftStickY = 1;
-    public static final int leftTrigger = 2;
-    public static final int rightTrigger = 3;
-    public static final int rightStickX = 4;
-    public static final int rightStickY = 5;
+    public static final int rightStickX = 2;
+    public static final int rightStickY = 3;
 
     //Buttons
-    public static final int a = 1;
-    public static final int b = 2;
-    public static final int x = 3;
+    public static final int x = 1;
+    public static final int a = 2;
+    public static final int b = 3;
     public static final int y = 4;
     public static final int LB = 5;
     public static final int RB = 6;
-    public static final int back = 7;
-    public static final int start = 8;
+    public static final int leftTrigger = 7;
+    public static final int rightTrigger = 8;
+    public static final int back = 9;
+    public static final int start = 10;
   }
 
   public static final class Swerve {
@@ -181,27 +181,38 @@ public final class Constants {
   }
 
   public static final class EndEffectorConstants {
-    public static final double launchSpeed = 0.8;
-    public static final double launchTime = 5;
+    public static final double speakerLaunchSpeed = 0.8;
+    public static final double ampLaunchSpeed = 0.8;
+    public static final double launchWaitTime = 1;
+    public static final double launchContactTime = 1;
+    
     public static final double launcherThreshold = 0.1;
     public static final double intakeSpeed = 0.8;
-    public static final double intakeTime = 5;
+    public static final double intakeTime = 3;
     public static final double intakeDeadband = 0.1;
-    public static final double feedSpeed = 0.8;
+    public static final double feedSpeed = 0.3;
+    public static final double launchFeedSpeed = 1.0;
     public static final double feedDeadband = 0.1;
 
-    public static final double armKP = 0.03;
+    public static final double armKP = 0.15;
     public static final double armKI = 0;
     public static final double armKD = 0;
 
+    public static final double topLaunchKP = 0.1;
+    public static final double topLaunchKI = 0;
+    public static final double topLaunchKD = 0;
+
+    public static final double bottomLaunchKP = 0.1;
+    public static final double bottomLaunchKI = 0;
+    public static final double bottomLaunchKD = 0;
+
     //NEED TO MAKE FINAL LATER
-    public static double armLevelVoltage = 0.1;
+    public static final double armLevelVoltage = 0.04;
 
-    public static final double maxArmSpeedUp = 0.25;
-    public static final double maxArmSpeedDown = -0.15;
+    public static final double maxArmSpeed = 0.25;
 
-    public static final double armGearRatio = 1/125;
-    public static final double sprocketRatio = 36/22;
+    public static final double armGearRatio = 1.0/125.0;
+    public static final double sprocketRatio = 25.0/36.0;
 
 //NEED TO CHANGE
     public static final double armClimbPosition = -5;
@@ -230,7 +241,7 @@ public final class Constants {
     //Right speaker
     //Far stage
     //Left stage
-    //Right stage
+    //Right stageLB
     public static final Double[] id_Blue = {1.0, 2.0, 6.0, 7.0, 8.0, 14.0, 15.0, 16.0};
     public static final Double[] id_Red = {10.0, 9.0, 5.0, 4.0, 3.0, 13.0, 12.0, 11.0};
 
@@ -245,10 +256,9 @@ public final class Constants {
 
     public static final int[] targets = {5};
 
-    public static final Rotation2d nearLaunchPosition = Rotation2d.fromDegrees(45);
-    public static final Rotation2d farLaunchPosition = Rotation2d.fromDegrees(95);
-    public static final Rotation2d ampLaunchPosition = Rotation2d.fromDegrees(85);
-    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(0);
+    public static final Rotation2d speakerPosition = Rotation2d.fromDegrees(25);
+    public static final Rotation2d ampPosition = Rotation2d.fromDegrees(90);
+    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(-5);
 
     public static final Rotation2d armStartingPosition = Rotation2d.fromDegrees(75);
 
@@ -257,12 +267,12 @@ public final class Constants {
     public static final double launchMidpoint = (launchDistance1 + launchDistance2) / 2;
 
     //Pneumatics Constants
-    public static final double minPressure = 60;
-    public static final double maxPressure = 120;
+    // public static final double minPressure = 60;
+    // public static final double maxPressure = 120;
 
     public static final double setpointRange = 5;
 
-    public static final double LauncherDeadband = 0.1;
+    public static final double LauncherDeadband = 0.3;
     public static final double ArmDeadband = 0.1;
 
     public static final double gOffset = 0;

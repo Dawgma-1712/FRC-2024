@@ -7,11 +7,13 @@ import frc.robot.subsystems.*;
 
 public class LauncherTriggerCMD extends Command{
     private Launcher launcher;
-    private Supplier<Double> speed;
+    private Supplier<Double> speedForwards;
+    private Supplier<Double> speedBackwards;
 
-    public LauncherTriggerCMD(Launcher launcher, Supplier<Double> speed) {
+    public LauncherTriggerCMD(Launcher launcher, Supplier<Double> speedForwards, Supplier<Double> speedBackwards) {
         this.launcher = launcher;
-        this.speed = speed;
+        this.speedForwards = speedForwards;
+        this.speedBackwards = speedBackwards;
         addRequirements(launcher);
     }
 
@@ -19,8 +21,15 @@ public class LauncherTriggerCMD extends Command{
 
     @Override
     public void execute() {
-        if(speed.get() > Constants.OperatorConstants.LauncherDeadband){
-            launcher.setSpeed(speed.get());
+        double speed;
+        if(speedForwards.get() > speedBackwards.get() ){
+            speed = speedForwards.get();
+        }else{
+            speed = -speedBackwards.get();
+        }
+
+        if(Math.abs(speed) > Constants.OperatorConstants.LauncherDeadband){
+            launcher.setSpeed(speed);
         }else{
             launcher.setSpeed(0);
         }

@@ -3,6 +3,7 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
+import frc.robot.Constants;
 
 public class FeedTriggerCMD extends Command{
     private Feed feed;
@@ -19,11 +20,18 @@ public class FeedTriggerCMD extends Command{
 
     @Override
     public void execute() {
+      double speed = 0;
       if(Math.abs(intakeSpeed.get()) > Math.abs(launcherSpeed.get())){
-        feed.setSpeed(intakeSpeed.get());
+        speed = intakeSpeed.get();
+       
       }
       else{
-        feed.setSpeed(launcherSpeed.get());
+        speed = launcherSpeed.get();
+      }
+      if(Math.abs(speed) > Constants.EndEffectorConstants.feedDeadband){
+        feed.setSpeed(speed);
+      }else{
+        feed.setSpeed(0);
       }
     }
 

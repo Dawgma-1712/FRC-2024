@@ -14,10 +14,7 @@ public class Feed extends SubsystemBase{
     }
 
     public void setSpeed(double speed) {
-        if(Math.abs(speed)>0.3){
-            feedMotor.set(speed);
-        }
-        
+        feedMotor.set(speed);
     }
 
     public void feed(){

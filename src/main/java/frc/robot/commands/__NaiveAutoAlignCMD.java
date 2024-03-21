@@ -18,7 +18,7 @@ import frc.robot.LimelightHelpers;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class NaiveAutoAlignCMD extends Command{
+public class __NaiveAutoAlignCMD extends Command{
     private Swerve s_Swerve;
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
@@ -31,7 +31,7 @@ public class NaiveAutoAlignCMD extends Command{
     private int[] targetIds;
     private double targetAngle;
 
-    public NaiveAutoAlignCMD(
+    public __NaiveAutoAlignCMD(
         Swerve s_Swerve,
         DoubleSupplier translationSup,
         DoubleSupplier strafeSup,
