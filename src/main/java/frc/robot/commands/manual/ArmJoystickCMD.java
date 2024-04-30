@@ -1,14 +1,15 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 import java.util.function.Supplier;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class ArmJoystickCommand extends CommandBase{
+public class ArmJoystickCMD extends Command{
     private Arm arm;
     private Supplier<Double> raiseValue;
 
-    public ArmJoystickCommand(Arm arm, Supplier<Double> raiseValue) {
+    public ArmJoystickCMD(Arm arm, Supplier<Double> raiseValue) {
         this.arm = arm;
         this.raiseValue = raiseValue;
         addRequirements(arm);
@@ -18,13 +19,16 @@ public class ArmJoystickCommand extends CommandBase{
 
     @Override
     public void execute() {
-        double raise = Math.abs(raiseValue.get()) > 0.04 ? raiseValue.get() : 0;
-        arm.manualArm(raise);
+        if(Math.abs(raiseValue.get()) > Constants.OperatorConstants.ArmDeadband){
+            arm.setSpeed(raiseValue.get());
+        }else{
+            arm.setSpeed(0);
+        }
+        
     }
 
     @Override
     public void end(boolean interrupted) {
-
     }
 
     @Override

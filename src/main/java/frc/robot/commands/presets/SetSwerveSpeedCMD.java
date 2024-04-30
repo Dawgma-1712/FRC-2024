@@ -2,18 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.presets;
 
 import edu.wpi.first.wpilibj2.command.Command;
-//import frc.robot.Constants.Swerve;
 import frc.robot.subsystems.*;
 
-public class SlowMode extends Command {
+public class SetSwerveSpeedCMD extends Command {
 
   private final Swerve swerve;
   private double percentSpeed;
 
-  public SlowMode(Swerve swerve, double percentSpeed) {
+  public SetSwerveSpeedCMD(Swerve swerve, double percentSpeed) {
     this.swerve = swerve;
     this.percentSpeed = percentSpeed;
   }

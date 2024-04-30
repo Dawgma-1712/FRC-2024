@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.manual;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -16,9 +16,9 @@ public class TeleopSwerve extends Command {
   private DoubleSupplier rotationSup;
   private BooleanSupplier robotCentricSup;
 
-  private SlewRateLimiter translationLimiter = new SlewRateLimiter(3.0);
-  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(3.0);
-  private SlewRateLimiter rotationLimiter = new SlewRateLimiter(3.0);
+  private SlewRateLimiter translationLimiter = new SlewRateLimiter(Constants.Swerve.translationSlewRate);
+  private SlewRateLimiter strafeLimiter = new SlewRateLimiter(Constants.Swerve.strafeSlewRate);
+  private SlewRateLimiter rotationLimiter = new SlewRateLimiter(Constants.Swerve.rotationSlewRate);
 
   public TeleopSwerve(
       Swerve s_Swerve,
@@ -50,7 +50,7 @@ public class TeleopSwerve extends Command {
 
     /* Drive */
     s_Swerve.drive(
-        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+        new Translation2d(translationVal, strafeVal).times(Constants.Swerve.teleopScalar),
         rotationVal * Constants.Swerve.maxAngularVelocity,
         !robotCentricSup.getAsBoolean(),
         true);
