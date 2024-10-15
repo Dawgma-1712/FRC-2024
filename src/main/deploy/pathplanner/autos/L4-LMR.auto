@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.49546117110252225,
+      "y": 6.646941582171453
+    },
+    "rotation": 58.495733280795825
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "L4-LMR"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Four Note",
+  "choreoAuto": false
+}
