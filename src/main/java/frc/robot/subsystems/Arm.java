@@ -21,8 +21,8 @@ public class Arm extends SubsystemBase{
     private final CANSparkMax raiseMotor2 = new CANSparkMax(14, MotorType.kBrushless);
     private final RelativeEncoder raiseEncoder1 = raiseMotor1.getEncoder();
     private final RelativeEncoder raiseEncoder2 = raiseMotor2.getEncoder();
-    private DigitalInput limitSwitchTop = new DigitalInput(0);
-    private DigitalInput limitSwitchBottom = new DigitalInput(1);
+    private DigitalInput limitSwitchTop = new DigitalInput(1);
+    private DigitalInput limitSwitchBottom = new DigitalInput(2);
 
     private final PIDController armRaisePID1 = new PIDController(Constants.EndEffectorConstants.armKP, Constants.EndEffectorConstants.armKI, Constants.EndEffectorConstants.armKD);
     private final PIDController armRaisePID2 = new PIDController(Constants.EndEffectorConstants.armKP, Constants.EndEffectorConstants.armKI, Constants.EndEffectorConstants.armKD);
@@ -32,7 +32,7 @@ public class Arm extends SubsystemBase{
     private double speed1, speed2 = 0;
 
     private ShuffleboardTab armTab = Shuffleboard.getTab("Arm Control");
-    private GenericEntry angelChooser = armTab.add("targetPosition", Constants.OperatorConstants.armStartingPosition.getDegrees()).getEntry();
+    private GenericEntry angleChooser = armTab.add("targetPosition", Constants.OperatorConstants.armStartingPosition.getDegrees()).getEntry();
 
     private GenericEntry KPChooser = armTab.addPersistent("arm kp", 0).getEntry();
     private GenericEntry KIChooser = armTab.addPersistent("arm ki", 0).getEntry();
@@ -58,7 +58,7 @@ public class Arm extends SubsystemBase{
 
     public void periodic(){
         if(positionControlChooser.getBoolean(false)){
-            setTargetPosition(Rotation2d.fromDegrees(angelChooser.getDouble(getAngle().getDegrees())));
+            setTargetPosition(Rotation2d.fromDegrees(angleChooser.getDouble(getAngle().getDegrees())));
             armRaisePID1.setP(KPChooser.getDouble(armRaisePID1.getP()));
             armRaisePID1.setI(KIChooser.getDouble(armRaisePID1.getI()));
             armRaisePID1.setD(KDChooser.getDouble(armRaisePID1.getD()));
@@ -76,6 +76,8 @@ public class Arm extends SubsystemBase{
         speed1 = MathUtil.clamp(speed1 + calculateFeedForward(getAngle1()), -Constants.EndEffectorConstants.maxArmSpeed, Constants.EndEffectorConstants.maxArmSpeed);
         speed2 = MathUtil.clamp(speed2 + calculateFeedForward(getAngle2()), -Constants.EndEffectorConstants.maxArmSpeed, Constants.EndEffectorConstants.maxArmSpeed);
 
+        SmartDashboard.putNumber("FF", calculateFeedForward(getAngle1()));
+
         targetAngleDisplay.setDouble(targetAngle.getDegrees());
         currentAngleDisplay.setDouble(getAngle().getDegrees());
          
@@ -83,8 +85,8 @@ public class Arm extends SubsystemBase{
         bottomSwitchDisplay.setBoolean(limitSwitchBottom.get());
         // speed1Display.setDouble(speed1);
         // speed2Display.setDouble(speed2);
-        speed1Display.setDouble(getAngle1().getDegrees());
-        speed2Display.setDouble(getAngle2().getDegrees());
+        speed1Display.setDouble(speed1);
+        speed2Display.setDouble(speed2);
 
         if(!limitSwitchTop.get()) {
             speed1 = Math.min(0, speed1);
@@ -92,17 +94,22 @@ public class Arm extends SubsystemBase{
             resetEncoders(Rotation2d.fromDegrees(105));
         }
 
-        if(limitSwitchBottom.get()) {
-            speed1 = Math.max(0, speed1);
-            speed2 = Math.max(0, speed2);
-            resetEncoders(Rotation2d.fromDegrees(5));
-        }
+        // if(limitSwitchBottom.get()) {
+        //     speed1 = Math.max(0, speed1);
+        //     speed2 = Math.max(0, speed2);
+        //     resetEncoders(Rotation2d.fromDegrees(5));
+        // }
 
         raiseMotor1.set(speed1);
         raiseMotor2.set(speed2);
+
+        SmartDashboard.putBoolean("Position control", positionControl);
+        SmartDashboard.putNumber("Arm speed", speed1);
+        SmartDashboard.putNumber("Arm speed 2", speed2);
     }
 
     private double calculateFeedForward(Rotation2d angle){
+        SmartDashboard.putNumber("Cosine", Math.cos(angle.getRadians()));
         return Math.cos(angle.getRadians()) * Constants.EndEffectorConstants.armLevelVoltage;
     }
 

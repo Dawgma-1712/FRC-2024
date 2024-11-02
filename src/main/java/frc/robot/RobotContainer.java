@@ -64,24 +64,27 @@ public class RobotContainer {
 //b climb
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(operator, Constants.ControllerMap.y);
-  private final JoystickButton robotCentric = new JoystickButton(operator, Constants.ControllerMap.a);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, Constants.ControllerMap.start);
+  private final JoystickButton robotCentric = new JoystickButton(driver, Constants.ControllerMap.back);
   private final JoystickButton climb = new JoystickButton(operator, Constants.ControllerMap.b);
 
-  private final JoystickButton slow = new JoystickButton(driver, Constants.ControllerMap.LB);
-  private final JoystickButton pickup = new JoystickButton(driver, Constants.ControllerMap.leftTrigger);
+  private final JoystickButton pickup = new JoystickButton(driver, Constants.ControllerMap.LB);
+  //Some axes such as left trigger being used as buttons
+  //private final JoystickButton pickup = new JoystickButton(driver, Constants.ControllerMap.leftTrigger);
 
-  private final JoystickButton outtake = new JoystickButton(driver, Constants.ControllerMap.RB);
+  private final JoystickButton launch = new JoystickButton(driver, Constants.ControllerMap.RB);
   
-  private final JoystickButton pickupPosition = new JoystickButton(driver, Constants.ControllerMap.b);
-  private final JoystickButton ampLaunch = new JoystickButton(driver, Constants.ControllerMap.a);
-  private final JoystickButton speakerLaunch = new JoystickButton(driver, Constants.ControllerMap.y);
+  private final JoystickButton pickupPosition = new JoystickButton(driver, Constants.ControllerMap.a);
+  //private final JoystickButton ampLaunch = new JoystickButton(driver, Constants.ControllerMap.a);
+  //private final JoystickButton speakerLaunch = new JoystickButton(driver, Constants.ControllerMap.y);
 
-  private final JoystickButton rawLaunch  = new JoystickButton(driver, Constants.ControllerMap.rightTrigger);
   private final JoystickButton lock = new JoystickButton(driver, Constants.ControllerMap.x);
 
-  private final JoystickButton ampPosition  = new JoystickButton(operator, Constants.ControllerMap.rightTrigger);
-  private final JoystickButton speakerPosition = new JoystickButton(operator, Constants.ControllerMap.leftTrigger);
+  private final JoystickButton ampPosition  = new JoystickButton(driver, Constants.ControllerMap.b);
+  private final JoystickButton speakerPosition = new JoystickButton(driver, Constants.ControllerMap.y);
+
+  private final GamepadAxisButton slow = new GamepadAxisButton(() -> DriverRT());
+  private final GamepadAxisButton outtake = new GamepadAxisButton(() -> DriverLT());
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
 
@@ -115,8 +118,8 @@ public class RobotContainer {
     launcher.setDefaultCommand(
       new LauncherTriggerCMD(
         launcher,
-        () -> operator.getRawAxis(Constants.ControllerMap.rightStickX),
-        () -> operator.getRawAxis(Constants.ControllerMap.rightTrigger)
+        () -> operator.getRawAxis(Constants.ControllerMap.rightTrigger),
+        () -> operator.getRawAxis(Constants.ControllerMap.rightStickX)
       )
     );
 
@@ -161,13 +164,13 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
     lock.onTrue(new LockCMD(s_Swerve));
     slow.onTrue(new SetSwerveSpeedCMD(s_Swerve, 0.3)).onFalse(new SetSwerveSpeedCMD(s_Swerve,1));
-    ampLaunch.onTrue(new AmpLaunchCMD(launcher, feed, intake, arm));
-    speakerLaunch.onTrue(new SpeakerLaunchCMD(launcher, feed, intake, arm));
+    //ampLaunch.onTrue(new AmpLaunchCMD(launcher, feed, intake, arm));
+    //speakerLaunch.onTrue(new SpeakerLaunchCMD(launcher, feed, intake, arm));
     pickupPosition.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.intakePosition));
     //climb.onTrue(new InstantCommand(()-> climber.toggle()));
     pickup.onTrue(new IntakeCMD(intake, arm, feed));
+    launch.onTrue(new SpeakerLaunchWithoutArmCMD(launcher, feed, intake));
     outtake.onTrue(new OuttakeCMD(intake, feed));
-    rawLaunch.onTrue(new SpeakerLaunchWithoutArmCMD(launcher, feed, intake));
 
     ampPosition.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.ampPosition));
     speakerPosition.onTrue(new SetArmPositionCMD(arm, Constants.OperatorConstants.speakerPosition));
@@ -199,6 +202,22 @@ public class RobotContainer {
       autoDrive? new DriveStraightCMD(s_Swerve) : new WaitCommand(0.1)
     );
     // return autoChooser.getSelected();
+  }
+
+  public boolean DriverLT() {
+    return Math.abs(driver.getRawAxis(Constants.ControllerMap.leftTrigger)) > 0.5;
+  }
+
+  public boolean DriverRT() {
+    return Math.abs(driver.getRawAxis(Constants.ControllerMap.rightTrigger)) > 0.5;
+  }
+
+  public boolean OperatorLT() {
+    return Math.abs(operator.getRawAxis(Constants.ControllerMap.leftTrigger)) > 0.5;
+  }
+
+  public boolean OperatorRT() {
+    return Math.abs(operator.getRawAxis(Constants.ControllerMap.rightTrigger)) > 0.5;
   }
 }
 

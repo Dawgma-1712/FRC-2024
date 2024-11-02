@@ -22,11 +22,11 @@ public class LauncherTriggerCMD extends Command{
     @Override
     public void execute() {
         double speed;
-        if(speedForwards.get() > speedBackwards.get() ){
-            speed = speedForwards.get();
-        }else{
-            speed = -speedBackwards.get();
-        }
+         //if(speedForwards.get() > speedBackwards.get() ){
+             speed = speedForwards.get();
+        //  }else{
+        //     speed = speedBackwards.get();
+        // }
 
         if(Math.abs(speed) > Constants.OperatorConstants.LauncherDeadband){
             launcher.setSpeed(speed);

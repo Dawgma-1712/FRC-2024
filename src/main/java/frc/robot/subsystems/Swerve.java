@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 import com.kauailabs.navx.frc.*;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -107,8 +108,9 @@ public class Swerve extends SubsystemBase {
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative
                     ? ChassisSpeeds.fromFieldRelativeSpeeds(
-                        translation.getX(), translation.getY(), rotation, getYaw())
+                        translation.getX() * this.percentSpeed, translation.getY() * this.percentSpeed, rotation, getYaw())
                     : new ChassisSpeeds(translation.getX()*this.percentSpeed, translation.getY()*this.percentSpeed, rotation));
+                    SmartDashboard.putNumber("Percent Speed", this.percentSpeed);
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
     }
     for (SwerveModule mod : mSwerveMods) {

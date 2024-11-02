@@ -23,16 +23,16 @@ public final class Constants {
     public static final int rightStickY = 5;
 
     //Buttons
-    public static final int x = 1;
-    public static final int a = 2;
-    public static final int b = 3;
+    public static final int x = 3;
+    public static final int a = 1;
+    public static final int b = 2;
     public static final int y = 4;
     public static final int LB = 5;
     public static final int RB = 6;
-    public static final int leftTrigger = 7;
-    public static final int rightTrigger = 8;
-    public static final int back = 9;
-    public static final int start = 10;
+    public static final int leftTrigger = 2;
+    public static final int rightTrigger = 3;
+    public static final int back = 7;
+    public static final int start = 8;
   }
 
   public static final class Swerve {
@@ -194,7 +194,7 @@ public final class Constants {
     public static final double launchFeedSpeed = 1.0;
     public static final double feedDeadband = 0.1;
 
-    public static final double armKP = 0.0000000001;
+    public static final double armKP = 1;
     public static final double armKI = 0;
     public static final double armKD = 0;
 
@@ -207,16 +207,16 @@ public final class Constants {
     public static final double bottomLaunchKD = 0;
 
     //NEED TO MAKE FINAL LATER
-    public static final double armLevelVoltage = 0.03;
+    public static final double armLevelVoltage = 0.035;
 
-    public static final double maxArmSpeed = 0.25;
+    public static final double maxArmSpeed = 0.30;
 
     public static final double armGearRatio = 1.0/125.0;
     public static final double sprocketRatio = 0.76;
 
 //NEED TO CHANGE
     public static final double armClimbPosition = -5;
-    public static final double armThreshold = 1.0;
+    public static final double armThreshold = 0.5;
   }
 
   public static final class OperatorConstants{
@@ -256,9 +256,9 @@ public final class Constants {
 
     public static final int[] targets = {5};
 
-    public static final Rotation2d speakerPosition = Rotation2d.fromDegrees(18);
-    public static final Rotation2d ampPosition = Rotation2d.fromDegrees(90);
-    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(4);
+    public static final Rotation2d speakerPosition = Rotation2d.fromDegrees(32);
+    public static final Rotation2d ampPosition = Rotation2d.fromDegrees(97);
+    public static final Rotation2d intakePosition = Rotation2d.fromDegrees(0);
 
     public static final Rotation2d armStartingPosition = Rotation2d.fromDegrees(75);
 

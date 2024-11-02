@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class LaunchCMD extends SequentialCommandGroup{  
     private double speed = 0;
-    private Rotation2d angle =Rotation2d.fromDegrees(30);
+    private Rotation2d angle = Rotation2d.fromDegrees(30);
     public LaunchCMD(Launcher launcher, Feed feed, Intake intake, Arm arm, String target){
         if(target == "amp"){
             speed = Constants.EndEffectorConstants.ampLaunchSpeed;

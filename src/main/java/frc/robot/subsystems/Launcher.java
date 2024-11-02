@@ -9,16 +9,17 @@ import frc.robot.commands.*;
 
 public class Launcher extends SubsystemBase{
     private final CANSparkMax leftMotor = new CANSparkMax(17, MotorType.kBrushless);
-    private final CANSparkMax rightMotor = new CANSparkMax(18, MotorType.kBrushless);
+    private final CANSparkMax rightMotor = new CANSparkMax(15, MotorType.kBrushless);
     public static boolean isSpinning = false;
     public static boolean checkDirection = true;
 
     public Launcher(){
+        rightMotor.setInverted(true);
     }
 
     public void setSpeed(double speed) {
         leftMotor.set(-speed);
-        rightMotor.set(-speed);
+        rightMotor.set(speed);
     }
 
     public void stop(){

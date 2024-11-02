@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 
 public class Intake extends SubsystemBase{
-    private final CANSparkMax intakeMotor = new CANSparkMax(15, MotorType.kBrushless);
+    private final CANSparkMax intakeMotor = new CANSparkMax(18, MotorType.kBrushless);
 
     public Intake(){
     }
